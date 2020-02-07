@@ -788,9 +788,6 @@ struct exynos_iovmm *exynos_create_single_iovmm(const char *name)
 	if (!ret) {
 		iovmm_add_log_to_debugfs(exynos_iovmm_debugfs_root,
 					IOVMM_TO_LOG(vmm), name);
-
-		iommu_add_log_to_debugfs(exynos_iommu_debugfs_root,
-				IOMMU_TO_LOG(vmm->domain), name);
 	} else {
 		goto err_init_event_log;
 	}

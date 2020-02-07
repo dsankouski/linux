@@ -118,7 +118,7 @@ struct exynos_iommu_event_log {
 
 #define SYSMMU_DRVDATA_TO_LOG(data) (&(data)->log)
 #define IOMMU_PRIV_TO_LOG(data) (&(data)->log)
-#define IOMMU_TO_LOG(data) (&((struct exynos_iommu_domain *)(data)->priv)->log)
+#define IOMMU_TO_LOG(data) (&(data)->log)
 #define IOVMM_TO_LOG(data) (&(data)->log)
 
 static inline struct sysmmu_event_log *sysmmu_event_log_get(

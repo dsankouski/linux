@@ -3062,7 +3062,6 @@ static inline int sysmmu_map_pud(struct mm_struct *mm,
 int exynos_iommu_map_userptr(struct iommu_domain *dom, unsigned long addr,
 			      dma_addr_t iova, size_t size, int prot)
 {
-	struct exynos_iommu_domain *domain = dom->priv;
 	struct mm_struct *mm = current->mm;
 	unsigned long end = addr + size;
 	dma_addr_t start = iova;
@@ -3076,7 +3075,7 @@ int exynos_iommu_map_userptr(struct iommu_domain *dom, unsigned long addr,
 
 	do {
 		next = pgd_addr_end(addr, end);
-		ret = sysmmu_map_pud(mm, pgd, addr, next, domain, iova, prot);
+		ret = sysmmu_map_pud(mm, pgd, addr, next, iova, prot);
 		if (ret)
 			goto err;
 		iova += (next - addr);
@@ -3104,38 +3103,9 @@ void exynos_iommu_unmap_userptr(struct iommu_domain *dom,
 		unsigned int lv2ents, i;
 		sysmmu_pte_t *pent;
 
-		/* ignore fault entries */
-		if (lv1ent_fault(sent)) {
-			lv2ents = min_t(unsigned int, entries, NUM_LV1ENTRIES);
-			entries -= lv2ents;
-			iova += lv2ents << SPAGE_ORDER;
-			sent++;
-			continue;
-		}
-
-		BUG_ON(!lv1ent_page(sent));
-
 		lv2ents = min_t(unsigned int, lv2ents_within(iova), entries);
 
-		pent = page_entry(sent, iova);
-		for (i = 0; i < lv2ents; i++, pent++) {
-			/* ignore fault entries */
-			if (lv2ent_fault(pent))
-				continue;
-
-			BUG_ON(!lv2ent_small(pent));
-
-			if (!lv2ent_pfnmap(pent))
-				put_page(phys_to_page(spage_phys(pent)));
-
-			*pent = 0;
-		}
-
-		pgtable_flush(pent - lv2ents, pent);
-
-		entries -= lv2ents;
 		iova += lv2ents << SPAGE_ORDER;
-		sent++;
 	}
 
 	exynos_sysmmu_tlb_invalidate(dom, start, size);
