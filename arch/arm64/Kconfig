@@ -332,6 +332,24 @@ menu "ARM errata workarounds via the alternatives framework"
 config ARM64_WORKAROUND_CLEAN_CACHE
 	bool
 
+config SOC_EXYNOS7880
+	bool "Samsung EXYNOS7880"
+	select ARCH_EXYNOS
+	select ARCH_HAS_CPUFREQ
+	select HAVE_S3C2410_I2C if I2C
+	select HAVE_S3C2410_WATCHDOG if WATCHDOG
+	select HAVE_S3C_RTC if RTC_CLASS
+	select ARCH_SUPPORTS_MSI
+	select ARM_AMBA
+	select CLKSRC_OF
+	select USE_OF
+	select COMMON_CLK_SAMSUNG
+	select CLKSRC_EXYNOS_MCT
+	select PINCTRL
+	select SOC_SAMSUNG
+	select SAMSUNG_DMADEV
+	select PM_GENERIC_DOMAINS if PM
+
 config ARM64_ERRATUM_826319
 	bool "Cortex-A53: 826319: System might deadlock if a write cannot complete until read data is accepted"
 	default y
