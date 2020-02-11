@@ -57,6 +57,35 @@
 		.name		= id			\
 	}
 
+	#define EXYNOS7880_PIN_BANK_EINTN(pins, reg, id)	\
+    	{						\
+    		.type		= &bank_type_5,		\
+    		.pctl_offset	= reg,			\
+    		.nr_pins	= pins,			\
+    		.eint_type	= EINT_TYPE_NONE,	\
+    		.name		= id			\
+    	}
+
+    #define EXYNOS7880_PIN_BANK_EINTG(pins, reg, id, offs)	\
+    	{						\
+    		.type		= &bank_type_4,		\
+    		.pctl_offset	= reg,			\
+    		.nr_pins	= pins,			\
+    		.eint_type	= EINT_TYPE_GPIO,	\
+    		.eint_offset	= offs,			\
+    		.name		= id			\
+    	}
+
+    #define EXYNOS7880_PIN_BANK_EINTW(pins, reg, id, offs)	\
+    	{						\
+    		.type		= &bank_type_5,		\
+    		.pctl_offset	= reg,			\
+    		.nr_pins	= pins,			\
+    		.eint_type	= EINT_TYPE_WKUP,	\
+    		.eint_offset	= offs,			\
+    		.name		= id			\
+    	}
+
 #define EXYNOS_PIN_BANK_EINTG(pins, reg, id, offs)	\
 	{						\
 		.type		= &bank_type_off,	\
