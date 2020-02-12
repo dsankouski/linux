@@ -899,24 +899,6 @@
 		trigger_levels_6 = <111>;
 		trigger_levels_7 = <115>;
 
-		trigger_enable_0 = <ENABLE>;
-		trigger_enable_1 = <ENABLE>;
-		trigger_enable_2 = <ENABLE>;
-		trigger_enable_3 = <ENABLE>;
-		trigger_enable_4 = <ENABLE>;
-		trigger_enable_5 = <ENABLE>;
-		trigger_enable_6 = <ENABLE>;
-		trigger_enable_7 = <ENABLE>;
-
-		trigger_type_0 = <THROTTLE_ACTIVE>;
-		trigger_type_1 = <THROTTLE_ACTIVE>;
-		trigger_type_2 = <THROTTLE_ACTIVE>;
-		trigger_type_3 = <THROTTLE_ACTIVE>;
-		trigger_type_4 = <THROTTLE_ACTIVE>;
-		trigger_type_5 = <THROTTLE_ACTIVE>;
-		trigger_type_6 = <THROTTLE_ACTIVE>;
-		trigger_type_7 = <HW_TRIP>;
-
 		freq_tab_count = <5>;
 
 		freq_clip_max_0 = <1586000>;
@@ -946,24 +928,6 @@
 		trigger_levels_5 = <101>;
 		trigger_levels_6 = <111>;
 		trigger_levels_7 = <115>;
-
-		trigger_enable_0 = <ENABLE>;
-		trigger_enable_1 = <ENABLE>;
-		trigger_enable_2 = <ENABLE>;
-		trigger_enable_3 = <ENABLE>;
-		trigger_enable_4 = <ENABLE>;
-		trigger_enable_5 = <ENABLE>;
-		trigger_enable_6 = <ENABLE>;
-		trigger_enable_7 = <ENABLE>;
-
-		trigger_type_0 = <THROTTLE_ACTIVE>;
-		trigger_type_1 = <THROTTLE_ACTIVE>;
-		trigger_type_2 = <THROTTLE_ACTIVE>;
-		trigger_type_3 = <THROTTLE_ACTIVE>;
-		trigger_type_4 = <THROTTLE_ACTIVE>;
-		trigger_type_5 = <THROTTLE_ACTIVE>;
-		trigger_type_6 = <THROTTLE_ACTIVE>;
-		trigger_type_7 = <HW_TRIP>;
 
 		freq_tab_count = <5>;
 
@@ -995,24 +959,6 @@
 		trigger_levels_6 = <111>;
 		trigger_levels_7 = <115>;
 
-		trigger_enable_0 = <ENABLE>;
-		trigger_enable_1 = <ENABLE>;
-		trigger_enable_2 = <ENABLE>;
-		trigger_enable_3 = <ENABLE>;
-		trigger_enable_4 = <ENABLE>;
-		trigger_enable_5 = <ENABLE>;
-		trigger_enable_6 = <ENABLE>;
-		trigger_enable_7 = <ENABLE>;
-
-		trigger_type_0 = <THROTTLE_ACTIVE>;
-		trigger_type_1 = <THROTTLE_ACTIVE>;
-		trigger_type_2 = <THROTTLE_ACTIVE>;
-		trigger_type_3 = <THROTTLE_ACTIVE>;
-		trigger_type_4 = <THROTTLE_ACTIVE>;
-		trigger_type_5 = <THROTTLE_ACTIVE>;
-		trigger_type_6 = <THROTTLE_ACTIVE>;
-		trigger_type_7 = <HW_TRIP>;
-
 		freq_tab_count = <6>;
 
 		freq_clip_max_0 = <1246000>;
@@ -1032,12 +978,6 @@
 		/* gpu cooling related table */
 		gpu_idx_num = <6>;
 		/* flags, driver_data(index), frequency */
-		gpu_cooling_table = < 0 0 1246000
-				      0 1 1100000
-				      0 2 962000
-				      0 3 728000
-				      0 4 350000
-				      0 5 TABLE_END>;
 	};
 
 	usb@13600000 {
@@ -1379,15 +1319,6 @@
 		/* lcd reset, power */
 		gpios = <&gpd3 4 0x1>, <&gpb0 1 0x1>;
 	};
-	tmuctrl_2: tmuctrl_G3D@10130000 {
-		/* flags, driver_data(index), frequency */
-		gpu_cooling_table = < 0 0 1246000
-				      0 1 1100000
-				      0 2 962000
-				      0 3 728000
-				      0 4 350000
-				      0 5 TABLE_END>;
-	};				  
 	fimc_is_flash_gpio: fimc-is-flash_gpio@0 {
 		compatible = "samsung,sensor-flash-gpio";
 		id = <0>; /* matching sensor id */
