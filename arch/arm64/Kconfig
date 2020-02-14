@@ -440,6 +440,11 @@ config ARM64_ERRATUM_819472
 
 	  If unsure, say Y.
 
+config PWRCAL
+    bool "Exynos Power Chip Abstraction Layer"
+    help
+    Support Power CAL for Exynos SoC.
+
 config ARM64_ERRATUM_832075
 	bool "Cortex-A57: 832075: possible deadlock on mixing exclusive memory accesses with device loads"
 	default y
