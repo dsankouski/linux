@@ -3,7 +3,7 @@
 # Samsung SoC drivers
 #
 menuconfig SOC_SAMSUNG
-	bool "Samsung SoC driver support" if COMPILE_TEST
+	bool "Samsung SoC driver support"
 
 if SOC_SAMSUNG
 
@@ -24,7 +24,7 @@ config EXYNOS_CHIPID
 	select SOC_BUS
 
 config EXYNOS_PMU
-	bool "Exynos PMU controller driver" if COMPILE_TEST
+	bool "Exynos PMU controller driver"
 	depends on ARCH_EXYNOS || ((ARM || ARM64) && COMPILE_TEST)
 	select EXYNOS_PMU_ARM_DRIVERS if ARM && ARCH_EXYNOS
 
