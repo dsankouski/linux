@@ -262,6 +262,275 @@ static const struct clk_ops samsung_pll35xx_clk_min_ops = {
 	.recalc_rate = samsung_pll35xx_recalc_rate,
 };
 
+
+
+/*
+ * PLL1431x Clock Type
+ */
+/* Maximum lock time can be ???? * PDIV cycles */
+
+static int _clk_pll1431x_find_pms(struct pll_spec *pll_spec,
+					struct pwrcal_pll_rate_table *rate_table,
+					unsigned long long rate)
+{
+	unsigned int p, m, s;
+	signed short k;
+	unsigned long long fref, fvco, fout;
+	unsigned long long tmprate, tmpfout;
+
+	for (p = pll_spec->pdiv_min; p <= pll_spec->pdiv_max; p++) {
+		fref = FIN_HZ_26M / p;
+		if ((fref < pll_spec->fref_min) || (fref > pll_spec->fref_max))
+			continue;
+
+		for (s = pll_spec->sdiv_min; s <= pll_spec->sdiv_max; s++) {
+			tmprate = rate;
+			do_div(tmprate, KHZ);
+			tmprate = tmprate * p * (1 << s);
+			do_div(tmprate, (FIN_HZ_26M / KHZ));
+			m = (unsigned int)tmprate;
+
+			if ((m < pll_spec->mdiv_min)
+					|| (m > pll_spec->mdiv_max))
+				continue;
+
+			tmprate = rate;
+			do_div(tmprate, KHZ);
+			tmprate = tmprate * p * (1 << s);
+			do_div(tmprate, (FIN_HZ_26M / KHZ));
+			tmprate = (tmprate - m) * 65536;
+			k = (unsigned int)tmprate;
+			if ((k < pll_spec->kdiv_min)
+					|| (k > pll_spec->kdiv_max))
+				continue;
+
+			fvco = FIN_HZ_26M * ((m << 16) + k);
+			do_div(fvco, p);
+			fvco >>= 16;
+			if ((fvco < pll_spec->fvco_min)
+					|| (fvco > pll_spec->fvco_max))
+				continue;
+
+			fout = fvco >> s;
+			if ((fout >= pll_spec->fout_min)
+				&& (fout <= pll_spec->fout_max)) {
+				tmprate = rate;
+				do_div(tmprate, KHZ);
+				tmpfout = fout;
+				do_div(tmpfout, KHZ);
+				if (tmprate == tmpfout) {
+					rate_table->rate = fout;
+					rate_table->pdiv = p;
+					rate_table->mdiv = m;
+					rate_table->sdiv = s;
+					rate_table->kdiv = k;
+					return 0;
+				}
+			}
+		}
+	}
+
+	return -1;
+}
+
+static int _clk_pll1431x_is_enabled(struct pwrcal_clk *clk)
+{
+	return (int)(pwrcal_getbit(clk->offset, PLL1431X_ENABLE));
+}
+
+static int _clk_pll1431x_enable(struct pwrcal_clk *clk)
+{
+	int timeout;
+
+	pwrcal_setbit(clk->offset, PLL1431X_ENABLE, 1);
+
+	for (timeout = 0;; timeout++) {
+		if (pwrcal_getbit(clk->offset, PLL1431X_LOCKED))
+			break;
+		if (timeout > CLK_WAIT_CNT)
+			return -1;
+		cpu_relax();
+	}
+
+	return 0;
+}
+
+static int _clk_pll1431x_disable(struct pwrcal_clk *clk)
+{
+	pwrcal_setbit(clk->offset, PLL1431X_ENABLE, 0);
+
+	return 0;
+}
+
+int _clk_pll1431x_is_disabled_bypass(struct pwrcal_clk *clk)
+{
+	if (pwrcal_getbit(clk->offset + 2, PLL1431X_BYPASS))
+		return 0;
+
+	return 1;
+}
+
+int _clk_pll1431x_set_bypass(struct pwrcal_clk *clk, int bypass_disable)
+{
+	if (bypass_disable == 0)
+		pwrcal_setbit(clk->offset + 2, PLL1431X_BYPASS, 1);
+	else
+		pwrcal_setbit(clk->offset + 2, PLL1431X_BYPASS, 0);
+
+	return 0;
+}
+
+static int _clk_pll1431x_set_pms(struct pwrcal_clk *clk,
+			const struct pwrcal_pll_rate_table  *rate_table)
+{
+	unsigned int mdiv, pdiv, sdiv, pll_con0, pll_con1;
+	signed short kdiv;
+	int timeout;
+
+	pdiv = rate_table->pdiv;
+	mdiv = rate_table->mdiv;
+	sdiv = rate_table->sdiv;
+	kdiv = rate_table->kdiv;
+
+	pll_con0 = pwrcal_readl(clk->offset);
+	pll_con1 = pwrcal_readl(clk->offset + 1);
+	pll_con0 &= ~((PLL1431X_MDIV_MASK << PLL1431X_MDIV_SHIFT)
+			| (PLL1431X_PDIV_MASK << PLL1431X_PDIV_SHIFT)
+			| (PLL1431X_SDIV_MASK << PLL1431X_SDIV_SHIFT));
+	pll_con0 |=  (mdiv << PLL1431X_MDIV_SHIFT)
+			| (pdiv << PLL1431X_PDIV_SHIFT)
+			| (sdiv << PLL1431X_SDIV_SHIFT);
+	pll_con0 &= ~(1<<26);
+	pll_con0 |= (1<<5);
+
+	pll_con1 &= ~(PLL1431X_K_MASK << PLL1431X_K_SHIFT);
+	pll_con1 |=  (kdiv << PLL1431X_K_SHIFT);
+
+	if (kdiv == 0)
+		pwrcal_writel(clk->status, pdiv*3000);
+	else
+		pwrcal_writel(clk->status, pdiv*3000);
+	pwrcal_writel(clk->offset, pll_con0);
+	pwrcal_writel(clk->offset + 1, pll_con1);
+
+	if (pll_con0 & (1 << PLL1431X_ENABLE)) {
+		for (timeout = 0;; timeout++) {
+			if (pwrcal_getbit(clk->offset, PLL1431X_LOCKED))
+				break;
+			if (timeout > CLK_WAIT_CNT)
+				return -1;
+			cpu_relax();
+		}
+	}
+
+	return 0;
+}
+
+static int _clk_pll1431x_set_rate(struct pwrcal_clk *clk,
+					unsigned long long rate)
+{
+	struct pwrcal_pll *pll = to_pll(clk);
+	struct pwrcal_pll_rate_table  tmp_rate_table;
+	const struct pwrcal_pll_rate_table  *rate_table;
+	struct pll_spec *pll_spec;
+
+	if (rate == 0) {
+		if (_clk_pll1431x_is_enabled(clk) != 0)
+			if (_clk_pll1431x_disable(clk))
+				goto errorout;
+		return 0;
+	}
+
+	rate_table = _clk_get_pll_settings(pll, rate);
+	if (rate_table == NULL) {
+		pll_spec = clk_pll_get_spec(clk);
+		if (pll_spec == NULL)
+			goto errorout;
+
+		if (_clk_pll1431x_find_pms(pll_spec, &tmp_rate_table, rate) < 0) {
+			pr_err("can't find pms value for rate(%lldHz) of %s",
+				rate,
+				clk->name);
+			goto errorout;
+		}
+
+		rate_table = &tmp_rate_table;
+		pr_warn("not exist in rate table, p(%d) m(%d) s(%d) k(%d) fout(%lld Hz) of %s",
+				rate_table->pdiv,
+				rate_table->mdiv,
+				rate_table->sdiv,
+				rate_table->kdiv,
+				rate,
+				clk->name);
+	}
+
+	if (_clk_pll1431x_set_pms(clk, rate_table))
+		goto errorout;
+
+	if (rate != 0) {
+		if (_clk_pll1431x_is_enabled(clk) == 0)
+			_clk_pll1431x_enable(clk);
+	}
+
+	return 0;
+
+errorout:
+	return -1;
+}
+
+static unsigned long long _clk_pll1431x_get_rate(struct pwrcal_clk *clk)
+{
+	unsigned int mdiv, pdiv, sdiv, pll_con0, pll_con1;
+	signed short kdiv;
+	unsigned long long fout;
+
+	if (_clk_pll1431x_is_enabled(clk) == 0)
+		return 0;
+
+	pll_con0 = pwrcal_readl(clk->offset);
+	pll_con1 = pwrcal_readl(clk->offset + 1);
+	mdiv = (pll_con0 >> PLL1431X_MDIV_SHIFT) & PLL1431X_MDIV_MASK;
+	pdiv = (pll_con0 >> PLL1431X_PDIV_SHIFT) & PLL1431X_PDIV_MASK;
+	sdiv = (pll_con0 >> PLL1431X_SDIV_SHIFT) & PLL1431X_SDIV_MASK;
+
+	kdiv = (short)(pll_con1 >> PLL1431X_K_SHIFT) & PLL1431X_K_MASK;
+
+	if (pdiv == 0) {
+		pr_err("pdiv is 0, id(%s)", clk->name);
+		return 0;
+	}
+
+	fout = FIN_HZ_26M * ((mdiv << 16) + kdiv);
+	do_div(fout, (pdiv << sdiv));
+	fout >>= 16;
+
+	return (unsigned long long)fout;
+}
+
+struct pwrcal_pll_ops pll141xx_ops = {
+	.is_enabled = _clk_pll141xx_is_enabled,
+	.enable = _clk_pll141xx_enable,
+	.disable = _clk_pll141xx_disable,
+	.set_rate = _clk_pll141xx_set_rate,
+	.get_rate = _clk_pll141xx_get_rate,
+};
+
+struct pwrcal_pll_ops pll1419x_ops = {
+	.is_enabled = _clk_pll141xx_is_enabled,
+	.enable = _clk_pll1419x_enable,
+	.disable = _clk_pll141xx_disable,
+	.set_rate = _clk_pll1419x_set_rate,
+	.get_rate = _clk_pll1419x_get_rate,
+};
+
+struct pwrcal_pll_ops pll1431x_ops = {
+	.is_enabled = _clk_pll1431x_is_enabled,
+	.enable = _clk_pll1431x_enable,
+	.disable = _clk_pll1431x_disable,
+	.set_rate = _clk_pll1431x_set_rate,
+	.get_rate = _clk_pll1431x_get_rate,
+};
+
 /*
  * PLL36xx Clock Type
  */
