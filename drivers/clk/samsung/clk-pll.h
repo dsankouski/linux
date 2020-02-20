@@ -36,6 +36,9 @@ enum samsung_pll_type {
 	pll_1451x,
 	pll_1452x,
 	pll_1460x,
+	pll_141xx,
+    pll_1419x,
+    pll_1431x
 };
 
 #define PLL_RATE(_fin, _m, _p, _s, _k, _ks) \
@@ -51,6 +54,33 @@ enum samsung_pll_type {
 		.pdiv	=	(_p),				\
 		.sdiv	=	(_s),				\
 	}
+
+#define PLL_141xx_RATE(_fin, _rate, _m, _p, _s)			\
+	{							\
+		.rate	=	PLL_VALID_RATE(_fin, _rate,	\
+				_m, _p, _s, 0, 0),		\
+		.mdiv	=	(_m),				\
+		.pdiv	=	(_p),				\
+		.sdiv	=	(_s),				\
+	}
+	/*check pll validation*/
+#define PLL_1419x_RATE(_fin, _rate, _m, _p, _s)			\
+   	{							\
+   		.rate	=	PLL_VALID_RATE(_fin, _rate,	\
+   				_m, _p, _s, 0, 0),		\
+   		.mdiv	=	(_m),				\
+   		.pdiv	=	(_p),				\
+   		.sdiv	=	(_s),				\
+   	}
+	/*check pll validation*/
+#define PLL_1431x_RATE(_fin, _rate, _m, _p, _s)			\
+   	{							\
+   		.rate	=	PLL_VALID_RATE(_fin, _rate,	\
+   				_m, _p, _s, 0, 0),		\
+   		.mdiv	=	(_m),				\
+   		.pdiv	=	(_p),				\
+   		.sdiv	=	(_s),				\
+   	}
 
 #define PLL_S3C2410_MPLL_RATE(_fin, _rate, _m, _p, _s)		\
 	{							\

@@ -328,10 +328,6 @@ void __init exynos7880_clk_init(struct device_node *np)
 	ect_parse_binary_header();
 #endif
 
-	ret = cal_init();
-	if (ret)
-		pr_err("%s: unable to initialize power cal\n", __func__);
-
 	ctx = samsung_clk_init(np, reg_base, nr_clks);
 	if (!ctx)
 		panic("%s: unable to allocate context.\n", __func__);
