@@ -14,17 +14,94 @@
 #include <linux/of.h>
 #include <linux/of_address.h>
 
-
 #include <dt-bindings/clock/exynos7880.h>
+#include "../../soc/samsung/pwrcal/S5E7880/S5E7880-vclk.h"
+#include "composite.h"
 
-#include "clk.h"
-#include "clk-cpu.h"
-#include "clk-pll.h"
-#include "S5E7880-cmusfr.h"
+#if defined(CONFIG_ECT)
+#include <soc/samsung/ect_parser.h>
+#endif
+
+enum exynos7880_clks {
+	none,
+
+	oscclk = 1,
+
+	/* The group of clocks in mfcmscl */
+	mscl_sysmmu = 10, mfc_sysmmu, mfcmscl_ppmu, mfcmscl_bts, gate_mscl_bi, gate_mscl_poly, gate_jpeg, gate_mfc,
+
+	/* The group of clocks in g3d */
+	g3d_sysmmu = 50, g3d_ppmu, g3d_bts, gate_g3d,
+
+	/* The group of clocks related with pwm and mct in peri */
+	peri_pwm_motor = 100, peri_sclk_pwm_motor, peri_mct,
+
+	/* The group of clocks related with i2c in peri */
+	i2c_sensor1 = 110, i2c_sensor2, i2c_tsp, i2c_touchkey, i2c_fuelgauge, i2c_spkamp, i2c_nfc, i2c_muic, i2c_ifpmic,
+
+	/* The group of clocks related with hsi2c in peri */
+	hsi2c_frontcam = 130, hsi2c_maincam, hsi2c_depthcam, hsi2c_frontsensor, hsi2c_rearaf, hsi2c_rearsensor,
+
+	/* The group of clocks related with gpio in peri */
+	gpio_touch = 150, gpio_top, gpio_nfc, gpio_ese, gpio_alive,
+
+	/* The group of clocks related with wdt in peri */
+	wdt_cpucl0 = 160, wdt_cpucl1,
+
+	/* The group of clocks related with uart in peri */
+	uart_debug = 170, uart_btwififm, uart_sensor,
+
+	/* The group of clocks related with tmu in peri */
+	peri_tmu_g3d = 180, peri_tmu_cpucl1, peri_tmu_cpucl0,
+
+	 /* The group of clocks related with spi in peri */
+	peri_spi_sensorhub = 190, peri_spi_voiceprocessor, peri_spi_ese, peri_spi_rearfrom, peri_spi_frontfrom,
+
+	/* The group of clocks related with rtc in peri */
+	peri_rtc_alive = 210, peri_rtc_top,
+
+	/* The group of etc clocks in peri */
+	peri_chipid = 220, peri_otp_con_top,
+
+	/* The group of clocks in fsys */
+	fsys_sysmmu = 300, fsys_ppmu, fsys_bts,
+	fsys_mmc0 = 310, fsys_mmc1, fsys_mmc2, fsys_sclk_mmc0, fsys_sclk_mmc1, fsys_sclk_mmc2,
+	fsys_sss = 330,  fsys_rtic, fsys_pdma0, fsys_pdma1, fsys_sromc, fsys_ufs, fsys_intmem,
+	fsys_usb20drd, fsys_usb20drd_phyclock, fsys_ufs_tx0_symbol_user, fsys_ufs_rx0_symbol_user,
+	usb_pll = 350,
+
+	/* The group of clocks in dispaud */
+	dispaud_sysmmu = 400, dispaud_ppmu, dispaud_bts,
+	dispaud_decon = 410, dispaud_dsim0, dispaud_dsim1, dispaud_mixer, dispaud_mi2s_aud, dispaud_mi2s_amp,
+	dispaud_common_dsim0, dispaud_common_dsim1,
+	dispaud_bus = 430, dispaud_decon_int_vclk, dispaud_decon_int_eclk, dispaud_mipiphy_txbyteclkhs0, dispaud_mipiphy_rxclkesc0_0,
+	dispaud_mipiphy_txbyteclkhs1, dispaud_mipiphy_rxclkesc0_1,
+	decon_vclk = 450, decon_vclk_local,
+	disp_pll = 460, aud_pll, d1_i2s, d1_mixer,
+
+	/* The group of clocks in isp */
+	isp_sysmmu = 500, isp_ppmu, isp_bts,
+	isp_cam = 510, isp_isp, isp_vra, pxmxdx_vra, pxmxdx_cam, pxmxdx_isp,
+	isp_s_rxbyteclkhs0_s4 = 520, isp_s_rxbyteclkhs1_s4, isp_s_rxbyteclkhs2_s4, isp_s_rxbyteclkhs3_s4, isp_s_rxbyteclkhs0_s4s,
+	isp_s_rxbyteclkhs1_s4s, isp_s_rxbyteclkhs2_s4s, isp_s_rxbyteclkhs3_s4s,
+	isp_pll = 530,
+
+	/* The group of clocks in ccore */
+	ccore_adcif = 600, ccore_hsi2c_mif, mmc0_sclk, mmc1_sclk, mmc2_sclk, ccore_qch_lh_cp, ccore_qch_lh_gnss,
+	ufsunipro_sclk = 610, ufsunipro_cfg_sclk, usb20drd_sclk,
+	uart_sensor_sclk = 620, uart_btwififm_sclk, uart_debug_sclk,
+	spi_frontfrom_sclk = 630, spi_rearfrom_sclk, spi_ese_sclk, spi_voiceprocessor_sclk, spi_sensorhub_sclk,
+	isp_sensor0_sclk = 640, isp_sensor1_sclk, isp_sensor2_sclk,
+
+	/* number of dfs driver starts from 2000 */
+	dfs_mif = 2000, dfs_mif_sw, dfs_int, dfs_cam, dfs_disp,
+
+	nr_clks,
+};
 
 /* fixed rate clocks generated outside the soc */
-static struct samsung_fixed_rate_clock exynos7880_fixed_rate_ext_clks[] __initconst = {
-	FRATE(0, "fin_pll", NULL, 0, 26000000),
+static struct samsung_fixed_rate exynos7880_fixed_rate_ext_clks[] __initdata = {
+	FRATE(oscclk, "fin_pll", NULL, CLK_IS_ROOT, 26000000),
 };
 
 static struct of_device_id ext_clk_match[] __initdata = {
