@@ -31,6 +31,17 @@ static struct of_device_id ext_clk_match[] __initdata = {
 	{ .compatible = "samsung,exynos7880-oscclk", .data = (void *)0, },
 };
 
+static const struct samsung_fixed_factor_clock top_fixed_factor_clks[] __initconst = {
+	FIXEDFACTOR(CCORE_FF_MUX_MEDIA_PLL_DIV2,	CCORE_MUX_MEDIA_PLL,	2,	0);
+    FIXEDFACTOR(CCORE_FF_MUX_BUS_PLL_DIV2,	CCORE_MUX_BUS_PLL,	2,	0);
+    FIXEDFACTOR(MIF0_FF_MUX_ACLK_MIF_PLL_DIV2,	MIF0_MUX_ACLK_MIF_PLL,	2,	0);
+    FIXEDFACTOR(MIF0_FF_MUX_ACLK_MIF_PLL_DIV4,	MIF0_FF_MUX_ACLK_MIF_PLL_DIV2,	2,	0);
+    FIXEDFACTOR(MIF0_FF_ACLK_MIF_PHY,	MIF0_MUX_ACLK_MIF_PLL,	8,	0);
+    FIXEDFACTOR(MIF1_FF_MUX_ACLK_MIF_PLL_DIV2,	MIF1_MUX_ACLK_MIF_PLL,	2,	0);
+    FIXEDFACTOR(MIF1_FF_MUX_ACLK_MIF_PLL_DIV4,	MIF1_FF_MUX_ACLK_MIF_PLL_DIV2,	2,	0);
+    FIXEDFACTOR(MIF1_FF_ACLK_MIF_PHY,	MIF1_MUX_ACLK_MIF_PLL,	8,	0);
+}
+
 static const struct samsung_fixed_rate_clock fsys_fixed_clks[] __initconst = {
 	FRATE(OSCCLK, OSCCLK, NULL,	0, 26 * MHZ);
     FRATE(CLKPHY_DISPAUD_MIPIPHY_TXBYTECLKHS_0, CLKPHY_DISPAUD_MIPIPHY_TXBYTECLKHS_0, OSCCLK, 0, 188 * MHZ);
