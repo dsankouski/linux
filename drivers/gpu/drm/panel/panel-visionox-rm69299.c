@@ -3,6 +3,7 @@
  * Copyright (c) 2019, The Linux Foundation. All rights reserved.
  */
 
+#include <linux/backlight.h>
 #include <linux/delay.h>
 #include <linux/module.h>
 #include <linux/of_device.h>
@@ -347,6 +348,37 @@ static const struct drm_panel_funcs visionox_rm69299_drm_funcs = {
 	.get_modes = visionox_rm69299_get_modes,
 };
 
+static int visionox_rm69299_panel_bl_update_status(struct backlight_device *bl)
+{
+	struct mipi_dsi_device *dsi = bl_get_data(bl);
+	int ret;
+
+	ret = mipi_dsi_dcs_set_display_brightness(dsi,
+						backlight_get_brightness(bl));
+	if (ret < 0)
+		return ret;
+
+	return 0;
+}
+
+static const struct backlight_ops visionox_rm69299_panel_bl_ops = {
+	.update_status = visionox_rm69299_panel_bl_update_status,
+};
+
+static struct backlight_device *
+visionox_rm69299_create_backlight(struct mipi_dsi_device *dsi)
+{
+	struct device *dev = &dsi->dev;
+	const struct backlight_properties props = {
+		.type = BACKLIGHT_PLATFORM,
+		.brightness = 255,
+		.max_brightness = 255,
+	};
+
+	return devm_backlight_device_register(dev, dev_name(dev), dev, dsi,
+					&visionox_rm69299_panel_bl_ops, &props);
+}
+
 static int visionox_rm69299_probe(struct mipi_dsi_device *dsi)
 {
 	struct device *dev = &dsi->dev;
@@ -384,6 +416,14 @@ static int visionox_rm69299_probe(struct mipi_dsi_device *dsi)
 		       DRM_MODE_CONNECTOR_DSI);
 	ctx->panel.dev = dev;
 	ctx->panel.funcs = &visionox_rm69299_drm_funcs;
+
+	if (ctx->mode == &visionox_rm69299_1080x2160_60hz) {
+		ctx->panel.backlight = visionox_rm69299_create_backlight(dsi);
+		if (IS_ERR(ctx->panel.backlight))
+		return dev_err_probe(dev, PTR_ERR(ctx->panel.backlight),
+				     "Failed to create backlight\n");
+	}
+
 	drm_panel_add(&ctx->panel);
 
 	dsi->lanes = 4;
