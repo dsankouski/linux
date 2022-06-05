@@ -25,6 +25,7 @@
 
 	aliases {
 		display0 = &framebuffer0;
+		hsuart0 = &uart6;
 		serial0 = &uart9;
 		serial1 = &uart6;
 	};
@@ -633,6 +634,58 @@
 	dai@2 {
 		reg = <2>;
 	};
+};
+
+/*
+ * Prevent garbage data on bluetooth UART lines
+ */
+&qup_uart6_default {
+        pinmux {
+                pins = "gpio45", "gpio46", "gpio47", "gpio48";
+                function = "qup6";
+        };
+
+        cts {
+                pins = "gpio45";
+                bias-pull-down;
+        };
+
+        rts-tx {
+                pins = "gpio46", "gpio47";
+                drive-strength = <2>;
+                bias-disable;
+        };
+
+        rx {
+                pins = "gpio48";
+                bias-pull-up;
+        };
+};
+
+/*
+ * Prevent garbage data on bluetooth UART lines
+ */
+&qup_uart6_default {
+        pinmux {
+                pins = "gpio45", "gpio46", "gpio47", "gpio48";
+                function = "qup6";
+        };
+
+        cts {
+                pins = "gpio45";
+                bias-pull-down;
+        };
+
+        rts-tx {
+                pins = "gpio46", "gpio47";
+                drive-strength = <2>;
+                bias-disable;
+        };
+
+        rx {
+                pins = "gpio48";
+                bias-pull-up;
+        };
 };
 
 &qup_uart9_rx {
