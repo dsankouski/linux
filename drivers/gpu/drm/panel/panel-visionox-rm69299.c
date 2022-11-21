@@ -371,7 +371,7 @@ visionox_rm69299_create_backlight(struct mipi_dsi_device *dsi)
 	struct device *dev = &dsi->dev;
 	const struct backlight_properties props = {
 		.type = BACKLIGHT_PLATFORM,
-		.brightness = 255,
+		.brightness = 50,
 		.max_brightness = 255,
 	};
 
