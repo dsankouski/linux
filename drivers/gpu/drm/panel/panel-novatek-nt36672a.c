@@ -115,7 +115,7 @@ static int nt36672a_panel_power_off(struct drm_panel *panel)
 	return ret;
 }
 
-static int nt36672a_panel_unprepare(struct drm_panel *panel)
+static int nt36672a_panel_disable(struct drm_panel *panel)
 {
 	struct nt36672a_panel *pinfo = to_nt36672a_panel(panel);
 	int ret;
@@ -143,6 +143,14 @@ static int nt36672a_panel_unprepare(struct drm_panel *panel)
 
 	/* 0x3C = 60ms delay */
 	msleep(60);
+
+	return ret;
+}
+
+static int nt36672a_panel_unprepare(struct drm_panel *panel)
+{
+	struct nt36672a_panel *pinfo = to_nt36672a_panel(panel);
+	int ret;
 
 	ret = nt36672a_panel_power_off(panel);
 	if (ret < 0)
@@ -255,6 +263,7 @@ static int nt36672a_panel_get_modes(struct drm_panel *panel,
 }
 
 static const struct drm_panel_funcs panel_funcs = {
+	.disable = nt36672a_panel_disable,
 	.unprepare = nt36672a_panel_unprepare,
 	.prepare = nt36672a_panel_prepare,
 	.get_modes = nt36672a_panel_get_modes,
