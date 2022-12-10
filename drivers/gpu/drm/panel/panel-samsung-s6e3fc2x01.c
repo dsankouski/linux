@@ -129,10 +129,11 @@ static int samsung_s6e3fc2x01_on(struct samsung_s6e3fc2x01 *ctx)
 	return 0;
 }
 
-static int samsung_s6e3fc2x01_off(struct samsung_s6e3fc2x01 *ctx)
+static int samsung_s6e3fc2x01_disable(struct drm_panel *panel)
 {
+	struct samsung_s6e3fc2x01 *ctx = to_samsung_s6e3fc2x01(panel);
 	struct mipi_dsi_device *dsi = ctx->dsi;
-	struct device *dev = &dsi->dev;
+	struct device *dev = &ctx->dsi->dev;
 	int ret;
 
 	dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
@@ -202,15 +203,9 @@ static int samsung_s6e3fc2x01_prepare(struct drm_panel *panel)
 static int samsung_s6e3fc2x01_unprepare(struct drm_panel *panel)
 {
 	struct samsung_s6e3fc2x01 *ctx = to_samsung_s6e3fc2x01(panel);
-	struct device *dev = &ctx->dsi->dev;
-	int ret;
 
 	if (!ctx->prepared)
 		return 0;
-
-	ret = samsung_s6e3fc2x01_off(ctx);
-	if (ret < 0)
-		dev_err(dev, "Failed to un-initialize panel: %d\n", ret);
 
 	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
 	regulator_disable(ctx->supply);
@@ -255,6 +250,7 @@ static int samsung_s6e3fc2x01_get_modes(struct drm_panel *panel,
 
 static const struct drm_panel_funcs samsung_s6e3fc2x01_panel_funcs = {
 	.prepare = samsung_s6e3fc2x01_prepare,
+	.disable = samsung_s6e3fc2x01_disable,
 	.unprepare = samsung_s6e3fc2x01_unprepare,
 	.get_modes = samsung_s6e3fc2x01_get_modes,
 };
