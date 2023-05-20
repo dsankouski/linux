@@ -579,6 +579,37 @@
 	status = "okay";
 };
 
+&pm8998_gpios {
+	chg_int_gpio: pm8998-gpio11-state {
+		pinconf {
+			pins = "gpio11";
+			function = "normal";
+			input-enable;
+			bias-disable;
+			power-source = <0>;
+		};
+	};
+};
+
+&i2c14 {
+	status = "okay";
+
+	pinctrl-0 = <&qup_i2c14_default>;
+	pinctrl-1 = <&qup_i2c14_sleep>;
+
+	pmic@66 {
+		compatible = "maxim,max77705";
+		reg = <0x66>;
+		interrupt-parent = <&spmi_bus>;
+		interrupts = <0x0 0xca 0 IRQ_TYPE_LEVEL_LOW>;
+		#interrupt-cells = <4>;
+		interrupt-names = "max77705_irq";
+		interrupt-controller;
+		haptic,mode = <1>;
+		haptic,divisor = <128>;
+	};
+};
+
 &ufs_mem_hc {
 	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
 	vcc-supply = <&vreg_l20a_2p95>;
@@ -967,6 +998,41 @@
 						drive-strength = <0x2>;
 						bias-pull-down;
 				};
+
+	/* why both of these? */
+	jig_irq_active: jig-irq-active-state {
+		pins = "gpio129";
+		drive-strength = <2>;
+		bias-disable;
+		input-enable;
+	};
+
+	jig_irq_suspend: jig-irq-suspend-state {
+		pins = "gpio129";
+		drive-strength = <2>;
+		bias-disable;
+		input-enable;
+	};
+
+	/* why both of these? */
+	muic_i2c_active: muic-i2c-active-state {
+		pins = "gpio25", "gpio26";
+		drive-strength = <2>;
+		bias-disable;
+	};
+
+	muic_i2c_suspend: muic-i2c-suspend-state {
+		pins = "gpio25", "gpio26";
+		drive-strength = <2>;
+		bias-disable;
+	};
+
+	qup_i2c14_sleep: qup-i2c14-sleep-state {
+		pins = "gpio33", "gpio34";
+		function = "gpio";
+		drive-strength = <2>;
+		input-enable;
+	};
 
 	sdc2_clk_state: sdc2-clk-state {
 		pins = "sdc2_clk";
