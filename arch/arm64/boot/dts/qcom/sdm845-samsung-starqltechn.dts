@@ -607,6 +607,10 @@
 		interrupt-controller;
 		haptic,mode = <1>;
 		haptic,divisor = <128>;
+
+		leds {
+			function = "status";
+		};
 	};
 };
 
