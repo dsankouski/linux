@@ -70,30 +70,34 @@ static int rmi_f55_detect(struct rmi_function *fn)
 		 * enabled electrodes is the sum of all field entries with a
 		 * value other than 0xff.
 		 */
-		error = rmi_read_block(fn->rmi_dev,
-				       fn->fd.control_base_addr + 1,
-				       buf, f55->num_rx_electrodes);
-		if (!error) {
-			total = 0;
-			for (i = 0; i < f55->num_rx_electrodes; i++) {
-				if (buf[i] != 0xff)
-					total++;
+		if (f55->num_rx_electrodes) {
+			error = rmi_read_block(fn->rmi_dev,
+					       fn->fd.control_base_addr + 1,
+					       buf, f55->num_rx_electrodes);
+			if (!error) {
+				total = 0;
+				for (i = 0; i < f55->num_rx_electrodes; i++) {
+					if (buf[i] != 0xff)
+						total++;
+				}
+				f55->cfg_num_rx_electrodes = total;
+				drv_data->num_rx_electrodes = total;
 			}
-			f55->cfg_num_rx_electrodes = total;
-			drv_data->num_rx_electrodes = total;
 		}
 
-		error = rmi_read_block(fn->rmi_dev,
-				       fn->fd.control_base_addr + 2,
-				       buf, f55->num_tx_electrodes);
-		if (!error) {
-			total = 0;
-			for (i = 0; i < f55->num_tx_electrodes; i++) {
-				if (buf[i] != 0xff)
-					total++;
+		if (f55->num_tx_electrodes) {
+			error = rmi_read_block(fn->rmi_dev,
+					       fn->fd.control_base_addr + 2,
+					       buf, f55->num_tx_electrodes);
+			if (!error) {
+				total = 0;
+				for (i = 0; i < f55->num_tx_electrodes; i++) {
+					if (buf[i] != 0xff)
+						total++;
+				}
+				f55->cfg_num_tx_electrodes = total;
+				drv_data->num_tx_electrodes = total;
 			}
-			f55->cfg_num_tx_electrodes = total;
-			drv_data->num_tx_electrodes = total;
 		}
 	}
 
