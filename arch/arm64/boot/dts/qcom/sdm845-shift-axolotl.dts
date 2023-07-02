@@ -470,6 +470,7 @@
 		compatible = "nxp,tfa9890";
 		reg = <0x34>;
 		vddd-supply = <&vreg_s4a_1p8>;
+		sound-name-prefix = "Speaker";
 		#sound-dai-cells = <0>;
 	};
 };
@@ -794,7 +795,7 @@
 	speaker-dai-link {
 		link-name = "Speaker Playback";
 		codec {
-			sound-dai = <&tfa9890_codec 0>;
+			sound-dai = <&tfa9890_codec>;
 		};
 
 		cpu {
