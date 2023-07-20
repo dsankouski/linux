@@ -1,0 +1,104 @@
+image: alpine:latest
+variables:
+  FLAVOR: postmarketos-qcom-sdm845
+  PACKAGE: device/community/linux-$FLAVOR
+after_script:
+  - /bin/sh .ci/move_logs.sh $CI_PROJECT_DIR
+stages:
+  - merge
+  - build
+  - pmaports
+
+workflow:
+  name: '$PROJECT_PIPELINE_NAME'
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^sdm845\/.+-dev$/
+      variables:
+        PROJECT_PIPELINE_NAME: Test build for $CI_COMMIT_BRANCH
+        PIPELINE: "build-dev"
+    - if: $CI_COMMIT_BRANCH =~ /^sdm845\/.+-release$/ && $CI_COMMIT_AUTHOR != "SDM845 CI <sdm845-ci@blah.com>"
+      variables:
+        PROJECT_PIPELINE_NAME: Upgrade to latest stable tag
+        PIPELINE: "stable-mr"
+    - if: $CI_COMMIT_TAG =~ /^sdm845-.*$/
+      when: never
+
+merge-stable:
+  stage: merge
+  rules:
+    - if: $PIPELINE == "stable-mr"
+  before_script:
+    - /bin/sh .ci/apk_retry.sh add git make curl jq xz patch openssh sudo
+    - wget "https://gitlab.com/postmarketOS/ci-common/-/raw/master/install_pmbootstrap.sh"
+    - sh ./install_pmbootstrap.sh
+  script:
+    # Run as non-root because we'll be messing with the git repo
+    # but preserve environment variables
+    - sudo -E -u pmos /bin/sh $PWD/.ci/merge_stable.sh
+  artifacts:
+    paths: [latest_stable_tag]
+
+.build:
+  stage: build
+  before_script:
+    # Add pmbootstrap repo for cross compiler toolchain
+    - echo "http://mirror.postmarketos.org/postmarketos/master" >> /etc/apk/repositories
+    - /bin/sh .ci/apk_retry.sh add --allow-untrusted bash bison findutils flex installkernel openssl-dev perl zstd gcc gcc-aarch64 wget make git musl-dev sudo
+    - wget "https://gitlab.com/postmarketOS/ci-common/-/raw/master/install_pmbootstrap.sh"
+    - sh ./install_pmbootstrap.sh
+  script:
+    # Ref to build might be an artifact from a previous job
+    - CHECKOUT_REF=$(cat latest_stable_tag || git rev-parse --verify HEAD)
+    - git checkout $CHECKOUT_REF
+    - echo "Building $PACKAGE at ref $CHECKOUT_REF"
+    - make CROSS_COMPILE=aarch64-alpine-linux-musl- ARCH=arm64 defconfig sdm845.config
+    - cp .config /home/pmos/.local/var/pmbootstrap/cache_git/pmaports/$PACKAGE/config-${FLAVOR}.aarch64
+    - KVER=$(make kernelversion)
+    - sed -i /home/pmos/.local/var/pmbootstrap/cache_git/pmaports/$PACKAGE/APKBUILD -e "s/^pkgver=.*/pkgver=$KVER/"
+    - sed -i /home/pmos/.local/var/pmbootstrap/cache_git/pmaports/$PACKAGE/APKBUILD -e "s/^pkgrel=.*/pkgrel=0/"
+    - sed -i /home/pmos/.local/var/pmbootstrap/cache_git/pmaports/$PACKAGE/APKBUILD -e "s/^_tag=.*/_tag=$CHECKOUT_REF/"
+    - sudo -u pmos -- pmbootstrap checksum linux-${FLAVOR}
+    - sudo -u pmos -- pmbootstrap --details-to-stdout build --force linux-${FLAVOR}
+  after_script:
+    - mkdir packages
+    - cp -r /home/pmos/.local/var/pmbootstrap/packages/ packages/ || true
+    # Save the modified package sources for the pmaports MR
+    - cp -r /home/pmos/.local/var/pmbootstrap/cache_git/pmaports/$PACKAGE packages/ || true
+    - cp latest_stable_tag packages/ || true
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - packages/
+  timeout: 10 h
+
+# Plain old build
+build-dev:
+  extends: .build
+  rules:
+    - if: $PIPELINE == "build-dev"
+
+# Get the latest stable tag from the merge_stable job
+# and build that
+build-release:
+  extends: .build
+  rules:
+    - if: $PIPELINE == "stable-mr"
+  needs:
+    - job: merge-stable
+      artifacts: true
+
+open-pmaports-mr:
+  stage: pmaports
+  needs:
+    - job: build-release
+      artifacts: true
+  script:
+    - /bin/sh .ci/apk_retry.sh add sudo openssh jq
+    - apk add curl
+    - wget "https://gitlab.com/postmarketOS/ci-common/-/raw/master/install_pmbootstrap.sh"
+    - sh ./install_pmbootstrap.sh
+    - cp -r packages/$(basename $PACKAGE)/* /home/pmos/.local/var/pmbootstrap/cache_git/pmaports/$PACKAGE/
+    - PKG="$(echo $PACKAGE | cut -d'/' -f2,3)"
+    - if [ ! -f packages/latest_stable_tag ]; then echo "No latest_stable_tag found"; ls packages/; exit 1; fi
+    - TAG=$(cat packages/latest_stable_tag)
+    - sudo -E -u pmos -- /bin/sh $PWD/.ci/pmaports.sh "$PKG" "$TAG"
