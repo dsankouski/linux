@@ -92,12 +92,13 @@ build-release:
 boot-test:
   stage: test
   variables:
-    PARENT_PROJECT_PATH: $CI_PROJECT_PATH
+    PARENT_PIPELINE: $CI_PIPELINE_ID
     PARENT_JOB_NAME: $PIPELINE
-    PARENT_JOB_REF: $CI_COMMIT_REF_NAME
   trigger:
     project: sdm845-mainline/validation
-    branch: main
+    forward:
+      pipeline_variables: true
+    strategy: depend
 
 open-pmaports-mr:
   stage: pmaports
