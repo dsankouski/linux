@@ -7,6 +7,7 @@ after_script:
 stages:
   - merge
   - build
+  - test
   - pmaports
 
 workflow:
@@ -19,14 +20,14 @@ workflow:
     - if: $CI_COMMIT_BRANCH =~ /^sdm845\/.+-release$/ && $CI_COMMIT_AUTHOR != "SDM845 CI <sdm845-ci@blah.com>"
       variables:
         PROJECT_PIPELINE_NAME: Upgrade to latest stable tag
-        PIPELINE: "stable-mr"
+        PIPELINE: "build-release"
     - if: $CI_COMMIT_TAG =~ /^sdm845-.*$/
       when: never
 
 merge-stable:
   stage: merge
   rules:
-    - if: $PIPELINE == "stable-mr"
+    - if: $PIPELINE == "build-release"
   before_script:
     - /bin/sh .ci/apk_retry.sh add git make curl jq xz patch openssh sudo
     - wget "https://gitlab.com/postmarketOS/ci-common/-/raw/master/install_pmbootstrap.sh"
@@ -61,6 +62,7 @@ merge-stable:
     - sudo -u pmos -- pmbootstrap --details-to-stdout build --force linux-${FLAVOR}
   after_script:
     - mkdir packages
+    - echo "linux-$FLAVOR" >> packages/packages
     - cp -r /home/pmos/.local/var/pmbootstrap/packages/ packages/ || true
     # Save the modified package sources for the pmaports MR
     - cp -r /home/pmos/.local/var/pmbootstrap/cache_git/pmaports/$PACKAGE packages/ || true
@@ -82,10 +84,20 @@ build-dev:
 build-release:
   extends: .build
   rules:
-    - if: $PIPELINE == "stable-mr"
+    - if: $PIPELINE == "build-release"
   needs:
     - job: merge-stable
       artifacts: true
+
+boot-test:
+  stage: test
+  variables:
+    PARENT_PROJECT_PATH: $CI_PROJECT_PATH
+    PARENT_JOB_NAME: $PIPELINE
+    PARENT_JOB_REF: $CI_COMMIT_REF_NAME
+  trigger:
+    project: sdm845-mainline/validation
+    branch: main
 
 open-pmaports-mr:
   stage: pmaports
