@@ -101,6 +101,8 @@ boot-test:
 
 open-pmaports-mr:
   stage: pmaports
+  rules:
+    - if: $PIPELINE == "build-release"
   needs:
     - job: build-release
       artifacts: true
