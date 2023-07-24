@@ -63,7 +63,7 @@ merge-stable:
   after_script:
     - mkdir packages
     - echo "linux-$FLAVOR" >> packages/packages
-    - cp -r /home/pmos/.local/var/pmbootstrap/packages/ packages/ || true
+    - cp -r /home/pmos/.local/var/pmbootstrap/packages/edge packages/ || true
     # Save the modified package sources for the pmaports MR
     - cp -r /home/pmos/.local/var/pmbootstrap/cache_git/pmaports/$PACKAGE packages/ || true
     - cp latest_stable_tag packages/ || true
