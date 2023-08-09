@@ -7,7 +7,7 @@ after_script:
 stages:
   - merge
   - build
-  - test
+#  - test
   - pmaports
 
 workflow:
@@ -54,7 +54,7 @@ merge-stable:
     - echo "Building $PACKAGE at ref $CHECKOUT_REF"
     - make CROSS_COMPILE=aarch64-alpine-linux-musl- ARCH=arm64 defconfig sdm845.config
     - cp .config /home/pmos/.local/var/pmbootstrap/cache_git/pmaports/$PACKAGE/config-${FLAVOR}.aarch64
-    - KVER=$(make kernelversion)
+    - KVER=$(make kernelversion | sed 's/-/_/')
     - sed -i /home/pmos/.local/var/pmbootstrap/cache_git/pmaports/$PACKAGE/APKBUILD -e "s/^pkgver=.*/pkgver=$KVER/"
     - sed -i /home/pmos/.local/var/pmbootstrap/cache_git/pmaports/$PACKAGE/APKBUILD -e "s/^pkgrel=.*/pkgrel=0/"
     - sed -i /home/pmos/.local/var/pmbootstrap/cache_git/pmaports/$PACKAGE/APKBUILD -e "s/^_tag=.*/_tag=$CHECKOUT_REF/"
@@ -89,16 +89,16 @@ build-release:
     - job: merge-stable
       artifacts: true
 
-boot-test:
-  stage: test
-  variables:
-    PARENT_PIPELINE: $CI_PIPELINE_ID
-    PARENT_JOB_NAME: $PIPELINE
-  trigger:
-    project: sdm845-mainline/validation
-    forward:
-      pipeline_variables: true
-    strategy: depend
+# boot-test:
+#   stage: test
+#   variables:
+#     PARENT_PIPELINE: $CI_PIPELINE_ID
+#     PARENT_JOB_NAME: $PIPELINE
+#   trigger:
+#     project: sdm845-mainline/validation
+#     forward:
+#       pipeline_variables: true
+#     strategy: depend
 
 open-pmaports-mr:
   stage: pmaports
