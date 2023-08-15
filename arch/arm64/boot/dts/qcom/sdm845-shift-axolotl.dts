@@ -436,22 +436,21 @@
 	status = "okay";
 	clock-frequency = <400000>;
 
-	touchscreen: focaltech@38 {
-		compatible = "focaltech,fts5452";
+	touchscreen@38 {
+		compatible = "focaltech,fts8719";
 		reg = <0x38>;
-
+		wakeup-source;
 		interrupt-parent = <&tlmm>;
-		interrupts = <125 IRQ_TYPE_EDGE_FALLING>;
-
-		avdd-supply = <&vreg_l28a_3p0>;
-		vddio-supply = <&vreg_l14a_1p88>;
+		interrupts = <125 0x2>;
+		vdd-supply = <&vreg_l28a_3p0>;
+		vcc-i2c-supply = <&vreg_l14a_1p88>;
 
 		pinctrl-names = "default", "suspend";
 		pinctrl-0 = <&ts_int_active &ts_reset_active>;
 		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
 
-		reset-gpios = <&tlmm 99 GPIO_ACTIVE_LOW>;
-
+		reset-gpio = <&tlmm 99 GPIO_ACTIVE_HIGH>;
+		irq-gpio = <&tlmm 125 GPIO_TRANSITORY>;
 		touchscreen-size-x = <1080>;
 		touchscreen-size-y = <2160>;
 		focaltech,max-touch-number = <5>;
