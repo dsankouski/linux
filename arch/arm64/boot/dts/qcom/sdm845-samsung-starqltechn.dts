@@ -504,6 +504,11 @@
 	};
 };
 
+&crypto {
+	/* FIXME: qce_start triggers an SError */
+	status = "disable";
+};
+
 /* Modem/wifi*/
 &mss_pil {
 	status = "okay";
