@@ -9,6 +9,9 @@
 
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+#include <dt-bindings/sound/qcom,q6afe.h>
+#include <dt-bindings/sound/qcom,q6asm.h>
+
 #include "sdm845.dtsi"
 
 /delete-node/ &rmtfs_mem;
@@ -507,6 +510,52 @@
 	status = "disable";
 };
 
+&adsp_pas {
+	status = "okay";
+	firmware-name = "qcom/sdm845/starqltechn/adsp.mbn";
+};
+
+&q6cvp {
+	status = "okay";
+};
+
+&q6cvs {
+	status = "okay";
+};
+
+&q6mvm {
+	status = "okay";
+};
+
+&sound {
+	model = "Samsung Galaxy S9";
+	audio-routing = "RX_BIAS", "MCLK",
+			"AMIC2", "MIC BIAS2",
+			"MIC BIAS2", "Headset Mic",
+			"AMIC3", "MIC BIAS2",
+			"MIC BIAS2", "FMLeft Tx",
+			"AMIC4", "MIC BIAS2",
+			"MIC BIAS2", "FMRight Tx",
+			"DMIC0", "MIC BIAS1",
+			"MIC BIAS1", "Digital Mic0",
+			"DMIC1", "MIC BIAS1",
+			"MIC BIAS1", "Digital Mic1",
+			"DMIC2", "MIC BIAS3",
+			"MIC BIAS3", "Digital Mic2",
+			"DMIC3", "MIC BIAS3",
+			"MIC BIAS3", "Digital Mic3",
+			"DMIC4", "MIC BIAS4",
+			"MIC BIAS4", "Digital Mic4",
+			"DMIC5", "MIC BIAS4",
+			"MIC BIAS4", "Digital Mic5";
+};
+
+&speaker_playback_dai {
+	codec {
+		sound-dai = <&max98927_codec 0>;
+	};
+};
+
 /* Modem/wifi*/
 &mss_pil {
 	status = "okay";
@@ -579,6 +628,12 @@
 		bias-pull-up;
 		drive-strength = <16>;
 	};
+
+	muic_i2c_active: muic-i2c-active-state {
+		pins = "gpio25", "gpio26";
+		drive-strength = <2>;
+		bias-disable;
+   	};
 
 	sd_card_det_n_state: sd-card-det-n-state {
 		pins = "gpio126";
