@@ -465,9 +465,6 @@ void s2dos05_powermeter_init(struct s2dos05_dev *s2dos05)
 
 	s2dos05_write_reg(s2dos05->i2c, S2DOS05_REG_PWRMT_CTRL1, adc_meter->adc_ctrl1);
 
-	/* IRQM unmask */
-	/* s2dos05_update_reg(s2dos05->i2c, S2DOS05_REG_IRQ_MASK, 0x00); */
-
 	/* ADC EN */
 	switch (adc_meter->adc_mode) {
 	case CURRENT_METER:
@@ -492,50 +489,47 @@ void s2dos05_powermeter_init(struct s2dos05_dev *s2dos05)
 
 	adc_meter->i2c = s2dos05->i2c;
 
-	s2dos05_adc_class = class_create("adc_meter");
-	s2dos05_adc_dev = device_create(s2dos05_adc_class, NULL, 0, NULL, "s2dos05_adc");
-
 	/* create sysfs entries */
-	ret = device_create_file(s2dos05_adc_dev, &dev_attr_adc_en);
+	ret = device_create_file(s2dos05->dev, &dev_attr_adc_en);
 	if (ret)
 		goto remove_adc_en;
-	ret = device_create_file(s2dos05_adc_dev, &dev_attr_adc_mode);
+	ret = device_create_file(s2dos05->dev, &dev_attr_adc_mode);
 	if (ret)
 		goto remove_adc_mode;
-	ret = device_create_file(s2dos05_adc_dev, &dev_attr_adc_sync_mode);
+	ret = device_create_file(s2dos05->dev, &dev_attr_adc_sync_mode);
 	if (ret)
 		goto remove_adc_sync_mode;
-	ret = device_create_file(s2dos05_adc_dev, &dev_attr_adc_val_all);
+	ret = device_create_file(s2dos05->dev, &dev_attr_adc_val_all);
 	if (ret)
 		goto remove_adc_val_all;
-	ret = device_create_file(s2dos05_adc_dev, &dev_attr_adc_val_0);
+	ret = device_create_file(s2dos05->dev, &dev_attr_adc_val_0);
 	if (ret)
 		goto remove_adc_val_0;
-	ret = device_create_file(s2dos05_adc_dev, &dev_attr_adc_val_1);
+	ret = device_create_file(s2dos05->dev, &dev_attr_adc_val_1);
 	if (ret)
 		goto remove_adc_val_1;
-	ret = device_create_file(s2dos05_adc_dev, &dev_attr_adc_val_2);
+	ret = device_create_file(s2dos05->dev, &dev_attr_adc_val_2);
 	if (ret)
 		goto remove_adc_val_2;
-	ret = device_create_file(s2dos05_adc_dev, &dev_attr_adc_val_3);
+	ret = device_create_file(s2dos05->dev, &dev_attr_adc_val_3);
 	if (ret)
 		goto remove_adc_val_3;
-	ret = device_create_file(s2dos05_adc_dev, &dev_attr_adc_val_4);
+	ret = device_create_file(s2dos05->dev, &dev_attr_adc_val_4);
 	if (ret)
 		goto remove_adc_val_4;
-	ret = device_create_file(s2dos05_adc_dev, &dev_attr_adc_val_5);
+	ret = device_create_file(s2dos05->dev, &dev_attr_adc_val_5);
 	if (ret)
 		goto remove_adc_val_5;
-	ret = device_create_file(s2dos05_adc_dev, &dev_attr_adc_val_6);
+	ret = device_create_file(s2dos05->dev, &dev_attr_adc_val_6);
 	if (ret)
 		goto remove_adc_val_6;
-	ret = device_create_file(s2dos05_adc_dev, &dev_attr_adc_val_7);
+	ret = device_create_file(s2dos05->dev, &dev_attr_adc_val_7);
 	if (ret)
 		goto remove_adc_val_7;
-	ret = device_create_file(s2dos05_adc_dev, &dev_attr_adc_ctrl1);
+	ret = device_create_file(s2dos05->dev, &dev_attr_adc_ctrl1);
 	if (ret)
 		goto remove_adc_ctrl1;
-	ret = device_create_file(s2dos05_adc_dev, &dev_attr_adc_validity);
+	ret = device_create_file(s2dos05->dev, &dev_attr_adc_validity);
 	if (ret)
 		goto remove_adc_validity;
 
@@ -543,33 +537,33 @@ void s2dos05_powermeter_init(struct s2dos05_dev *s2dos05)
 	return;
 
 remove_adc_validity:
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_validity);
+	device_remove_file(s2dos05->dev, &dev_attr_adc_validity);
 remove_adc_ctrl1:
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_ctrl1);
+	device_remove_file(s2dos05->dev, &dev_attr_adc_ctrl1);
 remove_adc_val_7:
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_7);
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_7);
 remove_adc_val_6:
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_6);
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_6);
 remove_adc_val_5:
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_5);
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_5);
 remove_adc_val_4:
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_4);
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_4);
 remove_adc_val_3:
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_3);
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_3);
 remove_adc_val_2:
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_2);
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_2);
 remove_adc_val_1:
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_1);
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_1);
 remove_adc_val_0:
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_0);
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_0);
 remove_adc_val_all:
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_all);
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_all);
 remove_adc_sync_mode:
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_sync_mode);
+	device_remove_file(s2dos05->dev, &dev_attr_adc_sync_mode);
 remove_adc_mode:
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_mode);
+	device_remove_file(s2dos05->dev, &dev_attr_adc_mode);
 remove_adc_en:
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_en);
+	device_remove_file(s2dos05->dev, &dev_attr_adc_en);
 
 	kfree(adc_meter->adc_val);
 	dev_info(s2dos05->dev, "%s : fail to create sysfs\n", __func__);
@@ -578,20 +572,34 @@ remove_adc_en:
 void s2dos05_powermeter_deinit(struct s2dos05_dev *s2dos05)
 {
 	/* remove sysfs entries */
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_en);
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_all);
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_mode);
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_sync_mode);
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_0);
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_1);
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_2);
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_3);
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_4);
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_5);
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_6);
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_val_7);
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_ctrl1);
-	device_remove_file(s2dos05_adc_dev, &dev_attr_adc_validity);
+	pr_info("removing...\n");
+	device_remove_file(s2dos05->dev, &dev_attr_adc_en);
+	pr_info("dev_attr_adc_en\n");
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_all);
+	pr_info("dev_attr_adc_en\n");
+	device_remove_file(s2dos05->dev, &dev_attr_adc_mode);
+	pr_info("dev_attr_adc_en\n");
+	device_remove_file(s2dos05->dev, &dev_attr_adc_sync_mode);
+	pr_info("dev_attr_adc_en\n");
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_0);
+	pr_info("dev_attr_adc_en\n");
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_1);
+	pr_info("dev_attr_adc_en\n");
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_2);
+	pr_info("dev_attr_adc_en\n");
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_3);
+	pr_info("dev_attr_adc_en\n");
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_4);
+	pr_info("dev_attr_adc_en\n");
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_5);
+	pr_info("dev_attr_adc_en\n");
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_6);
+	pr_info("dev_attr_adc_en\n");
+	device_remove_file(s2dos05->dev, &dev_attr_adc_val_7);
+	pr_info("dev_attr_adc_en\n");
+	device_remove_file(s2dos05->dev, &dev_attr_adc_ctrl1);
+	pr_info("dev_attr_adc_en\n");
+	device_remove_file(s2dos05->dev, &dev_attr_adc_validity);
 
 	/* ADC turned off */
 	s2dos05_write_reg(s2dos05->i2c, S2DOS05_REG_PWRMT_CTRL2, 0);
@@ -599,4 +607,15 @@ void s2dos05_powermeter_deinit(struct s2dos05_dev *s2dos05)
 	pr_info("%s: s2dos05 power meter deinit\n", __func__);
 }
 
+static struct i2c_driver s2dos05_driver = {
+	.driver = {
+		.name	= "s2dos05",
+	},
+	.probe		= s2dos05_probe,
+	.id_table	= s2dos05_id,
+};
+
+module_i2c_driver(s2dos05_driver);
+
 MODULE_LICENSE("GPL");
+MODULE_VERSION(DRV_VERSION);

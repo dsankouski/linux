@@ -33,9 +33,6 @@
 			height = <2960>;
 			stride = <(1440 * 4)>;
 			format = "a8r8g8b8";
-			vci-supply = <&s2dos05_ldo4>;
-			vddr-supply = <&s2dos05_buck1>;
-			vdd3-supply = <&s2dos05_ldo1>;
 		};
 	};
 

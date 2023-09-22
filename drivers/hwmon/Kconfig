@@ -1694,6 +1694,16 @@ config SENSORS_RASPBERRYPI_HWMON
 	  This driver can also be built as a module. If so, the module
 	  will be called raspberrypi-hwmon.
 
+config SENSORS_S2DOS05
+	tristate "SLSI S2DOS05 regulator powermeter"
+	depends on REGULATOR_S2DOS05 || COMPILE_TEST
+	help
+	  If you say yes here you get support for power and current measurement,
+	  supplies by s2dos05 regulator to it's load.
+
+	  This driver can also be built as a module.  If so, the module
+	  will be called s2dos05-hwmon.
+
 config SENSORS_SL28CPLD
 	tristate "Kontron sl28cpld hardware monitoring driver"
 	depends on MFD_SL28CPLD || COMPILE_TEST
