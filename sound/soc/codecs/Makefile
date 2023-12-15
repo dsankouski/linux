@@ -379,6 +379,15 @@ snd-soc-zl38060-objs := zl38060.o
 # Amp
 snd-soc-max9877-objs := max9877.o
 snd-soc-max98504-objs := max98504.o
+#obj-$(CONFIG_SND_SOC_MAX98512)	+= snd-soc-max98512.o
+#obj-$(CONFIG_SND_SOC_MAXIM_DSM)	+= snd-soc-maxim-dsm.o
+#obj-$(CONFIG_SND_SOC_MAXIM_DSM_CAL)	+= snd-soc-maxim-dsm-cal.o
+snd-soc-max98512-objs := max98512-downstream/max98512.o
+snd-soc-maxim-dsm-objs := max98512-downstream/maxim_dsm.o
+snd-soc-maxim-dsm-cal-objs := max98512-downstream/maxim_dsm_cal.o max98512-downstream/maxim_dsm_power.o
+obj-y	+= snd-soc-max98512.o
+obj-y	+= snd-soc-maxim-dsm.o
+obj-y	+= snd-soc-maxim-dsm-cal.o
 snd-soc-simple-amplifier-objs := simple-amplifier.o
 snd-soc-tpa6130a2-objs := tpa6130a2.o
 snd-soc-tas2552-objs := tas2552.o

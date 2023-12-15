@@ -2417,4 +2417,23 @@ config SND_SOC_LPASS_TX_MACRO
 	select SND_SOC_LPASS_MACRO_COMMON
 	tristate "Qualcomm TX Macro in LPASS(Low Power Audio SubSystem)"
 
+config SND_SOC_MAX98512
+	bool
+	default y
+	help
+		Maxim
+
+config SND_SOC_MAXIM_DSM
+	bool
+	default y
+	help
+		Maxim
+
+config SND_SOC_MAXIM_DSM_CAL
+	bool
+	default y
+	help
+		Maxim
+
+
 endmenu

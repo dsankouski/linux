@@ -1,0 +1,24 @@
+#
+
+
+menu "menu"
+
+config SND_SOC_MAX98512
+	bool
+	default y
+	help
+		Maxim
+
+config SND_SOC_MAXIM_DSM
+	bool
+	default y
+	help
+		Maxim
+
+config SND_SOC_MAXIM_DSM_CAL
+	bool
+	default y
+	help
+		Maxim
+
+endmenu
