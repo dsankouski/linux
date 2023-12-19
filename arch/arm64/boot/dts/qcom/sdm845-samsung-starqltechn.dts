@@ -601,11 +601,15 @@
    	status = "okay";
 
 	audio-routing =	"RX_BIAS", "MCLK",
-			"AMIC2", "MIC BIAS2",
-			"AMIC3", "MIC BIAS4",
-			"AMIC4", "MIC BIAS1",
-			"AMIC5", "MIC BIAS4";
-
+			"AMIC2", "MIC BIAS2", /* Headset Mic */
+			"AMIC3", "MIC BIAS2", /* FMLeft Tx */
+			"AMIC4", "MIC BIAS2", /* FMRight Tx */
+			"DMIC0", "MIC BIAS1", /* Digital Mic0 */
+			"DMIC5", "MIC BIAS4", /* Digital Mic1 */
+			"DMIC4", "MIC BIAS4", /* Digital Mic2 */
+			"DMIC3", "MIC BIAS3", /* Digital Mic3 */
+			"DMIC2", "MIC BIAS3", /* Digital Mic4 */
+			"DMIC1", "MIC BIAS1"; /* Digital Mic5 */
 
 	mm1-dai-link {
 		link-name = "MultiMedia1";
