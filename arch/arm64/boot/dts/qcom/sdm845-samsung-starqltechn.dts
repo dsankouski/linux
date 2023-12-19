@@ -140,9 +140,9 @@
 		pinctrl-names = "default";
 		pinctrl-0 = <&i2c18_sda_state &i2c18_scl_state>;
 
-		max98512@39 {
+		max98512_codec: max98512@39 {
 			compatible = "maxim,max98512";
-			#sound-dai-cells = <0x1>;
+			#sound-dai-cells = <0>;
 			reg = <0x39>;
 			maxim,spk-gain = <0x5>;
 			maxim,spk-gain-rcv = <0x1>;
@@ -658,6 +658,10 @@
 
 	speaker_playback_dai: speaker-dai-link {
 		link-name = "Speaker Playback";
+		codec {
+			sound-dai = <&max98512_codec>;
+		};
+
 		cpu {
 			sound-dai = <&q6afedai QUATERNARY_MI2S_RX>;
 		};
