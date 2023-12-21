@@ -7,6 +7,7 @@
 
 /dts-v1/;
 
+#include <dt-bindings/input/linux-event-codes.h>
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
 #include <dt-bindings/sound/qcom,q6afe.h>
@@ -14,6 +15,7 @@
 #include <dt-bindings/sound/qcom,q6voice.h>
 
 #include "sdm845.dtsi"
+#include "pm8998.dtsi"
 #include "sdm845-wcd9340.dtsi"
 
 /delete-node/ &rmtfs_mem;
@@ -128,6 +130,25 @@
 			no-map;
 		};
 	};
+
+	gpio_keys {
+  			compatible = "gpio-keys";
+        autorepeat;
+
+  			vol_up {
+  				label = "volume_up";
+  				gpios = <&pm8998_gpios 6 1>;
+  				linux,code = <KEY_VOLUMEUP>;
+  				debounce-interval = <15>;
+  			};
+
+  			key_wink {
+  				label = "key_wink";
+  				gpios = <&pm8998_gpios 19 1>;
+  				linux,code = <KEY_ENTER>;
+  				debounce-interval = <15>;
+  			};
+  		};
 
 
 	i2c@18 {
@@ -834,6 +855,11 @@
 &usb_1_qmpphy {
 	vdda-phy-supply = <&vdda_usb1_ss_1p2>;
 	vdda-pll-supply = <&vdda_usb1_ss_core>;
+	status = "okay";
+};
+
+&pm8998_resin {
+	linux,code = <KEY_VOLUMEDOWN>;
 	status = "okay";
 };
 
