@@ -36,17 +36,6 @@
 		#address-cells = <2>;
 		#size-cells = <2>;
 		ranges;
-		framebuffer: framebuffer@9d400000 {
-			compatible = "simple-framebuffer";
-			reg = <0 0x9d400000 0 (2960 * 1440 * 4)>;//2400000
-			width = <1440>;
-			height = <2960>;
-			stride = <(1440 * 4)>;
-			format = "a8r8g8b8";
-			vci-supply = <&s2dos05_ldo4>;
-			vddr-supply = <&s2dos05_buck1>;
-			vdd3-supply = <&s2dos05_ldo1>;
-		};
 	};
 
 	vph_pwr: vph-pwr-regulator {
@@ -235,6 +224,52 @@
 	};
 };
 
+&gmu {
+	status = "okay";
+};
+
+&gpu {
+	status = "okay";
+
+	zap-shader {
+		memory-region = <&gpu_mem>;
+		firmware-name = "qcom/sdm845/starqltechn/a630_zap.mbn";
+	};
+};
+
+&mdss {
+	status = "okay";
+};
+
+&mdss_dsi0 {
+        status = "okay";
+
+        panel@0 {
+            compatible = "mdss,s6e3ha8-amb577px01-wqhd";
+            reg = <0>;
+			vci-supply = <&s2dos05_ldo4>;
+			vddr-supply = <&s2dos05_buck1>;
+			vdd3-supply = <&s2dos05_ldo1>;
+            te-gpios = <&tlmm 10 GPIO_ACTIVE_HIGH>;
+            reset-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
+
+                port {
+                        panel_in: endpoint {
+                                remote-endpoint = <&mdss_dsi0_out>;
+                        };
+                };
+        };
+};
+
+&mdss_dsi0_out {
+        data-lanes = <0 1 2 3>;
+        remote-endpoint = <&panel_in>;
+};
+
+&mdss_dsi0_phy {
+	vdds-supply = <&vdda_mipi_dsi0_pll>;
+    status = "okay";
+};
 
 &apps_rsc {
 	regulators-0 {
