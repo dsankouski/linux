@@ -243,6 +243,7 @@
 
 &mdss_dsi0 {
         status = "okay";
+	    vdda-supply = <&vreg_l26a_1p2>;
 
         panel@0 {
             compatible = "mdss,s6e3ha8-amb577px01-wqhd";
@@ -252,6 +253,9 @@
 			vdd3-supply = <&s2dos05_ldo1>;
             te-gpios = <&tlmm 10 GPIO_ACTIVE_HIGH>;
             reset-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
+            		pinctrl-0 = <&sde_dsi_active &sde_te_active_sleep>;
+            		pinctrl-1 = <&sde_dsi_suspend &sde_te_active_sleep>;
+            		pinctrl-names = "default", "sleep";
 
                 port {
                         panel_in: endpoint {
@@ -560,6 +564,10 @@
 };
 
 &qupv3_id_1 {
+	status = "okay";
+};
+
+&gpi_dma0 {
 	status = "okay";
 };
 
@@ -900,6 +908,65 @@
 
 &tlmm {
 	gpio-reserved-ranges = <0 4>, <27 4>, <81 4>, <85 4>;
+
+				sde_dp_active: sde_dp_aux_sel_active {
+    					pins = "gpio100";
+    					function = "gpio";
+    					bias-disable = <0x0>;
+    					drive-strength = <0x8>;
+    			};
+
+    			sde_dp_suspend: sde_dp_aux_sel_suspend {
+    					pins = "gpio100";
+    					function = "gpio";
+    					bias-pull-down;
+    					drive-strength = <0x2>;
+    					output-low;
+    			};
+
+    						sde_dp_aux_en_active: sde_dp_aux_en_active {
+                					pins = "gpio7";
+                					function = "gpio";
+                					bias-disable = <0x0>;
+                					drive-strength = <0x8>;
+                			};
+
+                			sde_dp_aux_en_suspend: sde_dp_aux_en_suspend {
+                					pins = "gpio7";
+                					function = "gpio";
+                					bias-disable = <0x0>;
+                					drive-strength = <0x2>;
+                					output-high;
+                			};
+
+			sde_dp_hpd_sleep: sde_dp_hpd_sleep {
+					pins = "gpio80";
+					function = "gpio";
+					bias-disable = <0x0>;
+					drive-strength = <0x2>;
+					input-enable;
+			};
+
+				sde_dsi_active: sde_dsi_active {
+						pins = "gpio6";
+						function = "gpio";
+						drive-strength = <0x8>;
+						bias-disable = <0x0>;
+				};
+
+				sde_dsi_suspend: sde_dsi_suspend {
+						pins = "gpio6";
+						function = "gpio";
+						drive-strength = <0x2>;
+						bias-pull-down;
+				};
+
+				sde_te_active_sleep: sde_te_active_sleep {
+						pins = "gpio10";
+						function = "mdp_vsync";
+						drive-strength = <0x2>;
+						bias-pull-down;
+				};
 
 	sdc2_clk_state: sdc2-clk-state {
 		pins = "sdc2_clk";
