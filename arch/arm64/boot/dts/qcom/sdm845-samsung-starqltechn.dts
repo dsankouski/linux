@@ -611,6 +611,10 @@
 		leds {
 			function = "status";
 		};
+
+		charger {
+		    compatible = "max77705-charger";
+		};
 	};
 };
 

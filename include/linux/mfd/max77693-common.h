@@ -17,7 +17,7 @@ enum max77693_types {
 };
 
 /*
- * Shared also with max77843.
+ * Shared also with max77843, max77705.
  */
 struct max77693_dev {
 	struct device *dev;
