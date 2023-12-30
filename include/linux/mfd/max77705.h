@@ -13,6 +13,14 @@
 
 #define MFD_DEV_NAME "max77705"
 
+/*
+ * External type definition
+ */
+#define MAX77705_AUTOIBUS_FW_AT_OFF	3
+#define MAX77705_AUTOIBUS_FW_OFF	2
+#define MAX77705_AUTOIBUS_AT_OFF	1
+#define MAX77705_AUTOIBUS_ON	0
+
 #if defined(CONFIG_MOTOR_DRV_MAX77705)
 struct max77705_haptic_pdata {
 	int mode;

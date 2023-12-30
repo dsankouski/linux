@@ -29,6 +29,10 @@
 
 static struct mfd_cell max77705_devs[] = {
 	{ .name = "leds-max77705-rgb", },
+	{
+    	.name = "max77705-charger",
+    	.of_compatible = "maxim,max77705-charger",
+    },
 };
 
 int max77705_read_reg(struct i2c_client *i2c, u8 reg, u8 *dest)

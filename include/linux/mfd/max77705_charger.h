@@ -47,6 +47,11 @@ ssize_t max77705_chg_store_attrs(struct device *dev,
 	.store = max77705_chg_store_attrs,			\
 }
 
+static struct device_attribute max77705_charger_attrs[] = {
+	MAX77705_CHARGER_ATTR(chip_id),
+	MAX77705_CHARGER_ATTR(data),
+};
+
 #define MAX77705_CHG_SAFEOUT2                0x80
 
 /* MAX77705_CHG_REG_CHG_INT */
@@ -286,13 +291,6 @@ struct max77705_charger_data {
 	struct mutex irq_lock;
 	struct mutex ops_lock;
 
-	/* wakelock */
-	struct wake_lock wpc_wake_lock;
-	struct wake_lock chgin_wake_lock;
-	struct wake_lock wc_current_wake_lock;
-	struct wake_lock aicl_wake_lock;
-	struct wake_lock otg_wake_lock;
-
 	unsigned int	is_charging;
 	unsigned int	charging_type;
 	unsigned int	battery_state;
@@ -342,7 +340,6 @@ struct max77705_charger_data {
 
 	bool enable_sysovlo_irq;
 	int irq_sysovlo;
-	struct wake_lock sysovlo_wake_lock;
 
 	bool is_mdock;
 	bool otg_on;
@@ -353,7 +350,6 @@ struct max77705_charger_data {
 	int charging_curr_step;
 	int float_voltage;
 
-	sec_charger_platform_data_t *pdata;
 };
 
 
@@ -364,7 +360,9 @@ struct max77705_charger_data {
 #define MFC_LDO_OFF		0
 
 enum power_supply_ext_property {
-	POWER_SUPPLY_EXT_PROP_CHECK_SLAVE_I2C = POWER_SUPPLY_PROP_MAX,
+	POWER_SUPPLY_EXT_PROP_CHECK_SLAVE_I2C
+//	 = POWER_SUPPLY_PROP_MAX
+,
 	POWER_SUPPLY_EXT_PROP_MULTI_CHARGER_MODE,
 	POWER_SUPPLY_EXT_PROP_WIRELESS_OP_FREQ,
 	POWER_SUPPLY_EXT_PROP_WIRELESS_TX_CMD,
@@ -1306,15 +1304,6 @@ struct sec_fuelgauge_platform_data {
 	unsigned int full_condition_soc;
 #endif
 };
-
-#define sec_battery_platform_data_t \
-	struct sec_battery_platform_data
-
-#define sec_charger_platform_data_t \
-	struct sec_charger_platform_data
-
-#define sec_fuelgauge_platform_data_t \
-	struct sec_fuelgauge_platform_data
 
 static inline struct power_supply *get_power_supply_by_name(char *name)
 {

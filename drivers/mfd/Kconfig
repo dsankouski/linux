@@ -881,7 +881,7 @@ config MFD_MAX77693
 	  of the device.
 
 config MFD_MAX77705
-	bool "Maxim Semiconductor MAX77705 PMIC Support"
+	tristate "Maxim Semiconductor MAX77705 PMIC Support"
 	depends on I2C
 	select MFD_CORE
 	help

@@ -613,7 +613,7 @@
 		};
 
 		charger {
-		    compatible = "max77705-charger";
+		    compatible = "maxim,max77705-charger";
 		};
 	};
 };
