@@ -157,7 +157,7 @@ static int s6e3ha8_test_key_off_f0(struct mipi_dsi_device *dsi)
 	return s6e3ha2_dcs_dsi_write(dsi, d, ARRAY_SIZE(d));
 	return 0;
 }
-
+/* TEST KEY3 Enable*/
 static int s6e3ha8_test_key_on_fc(struct s6e3ha8 *ctx)
 {
 	s6e3ha2_dcs_write_seq_static(ctx, 0xfc, 0x5a, 0x5a);
@@ -364,16 +364,20 @@ s6e3ha8_test_key_off_f0(dsi);
 	}
 	usleep_range(10000, 11000);
 
+					/* OMOK setting 1 (Initial setting) - Scaler Latch Setting Guide */
 s6e3ha8_test_key_on_f0(dsi);
 	mipi_dsi_generic_write_seq(dsi, 0xb0, 0x07);
+	/* latch setting 1 : Scaler on/off & address setting & PPS setting -> Image update latch */
 	mipi_dsi_generic_write_seq(dsi, 0xf2, 0x3c, 0x10);
 	mipi_dsi_generic_write_seq(dsi, 0xb0, 0x0b);
+	/* latch setting 2 : Ratio change mode -> Image update latch */
 	mipi_dsi_generic_write_seq(dsi, 0xf2, 0x30);
-	mipi_dsi_generic_write_seq(dsi, 0x2a, 0x00, 0x00, 0x05, 0x9f);
-	mipi_dsi_generic_write_seq(dsi, 0x2b, 0x00, 0x00, 0x0b, 0x8f);
-	mipi_dsi_generic_write_seq(dsi, 0xba, 0x01);
+					/* OMOK setting 2 - Seamless setting guide : WQHD */
+	mipi_dsi_generic_write_seq(dsi, 0x2a, 0x00, 0x00, 0x05, 0x9f); /* CASET */
+	mipi_dsi_generic_write_seq(dsi, 0x2b, 0x00, 0x00, 0x0b, 0x8f); /* PASET */
+	mipi_dsi_generic_write_seq(dsi, 0xba, 0x01); /* scaler setup : scaler off */
 s6e3ha8_test_key_off_f0(dsi);
-	mipi_dsi_generic_write_seq(dsi, 0x35, 0x00);
+	mipi_dsi_generic_write_seq(dsi, 0x35, 0x00); /* TE Vsync ON */
 s6e3ha8_test_key_on_f0(dsi);
 	mipi_dsi_generic_write_seq(dsi, 0xed, 0x4c);
 s6e3ha8_test_key_off_f0(dsi);
@@ -406,6 +410,7 @@ s6e3ha8_test_key_on_f0(dsi);
 	mipi_dsi_generic_write_seq(dsi, 0xf7, 0x03);
 s6e3ha8_test_key_off_f0(dsi);
 	mipi_dsi_generic_write_seq(dsi, 0x9f, 0x5a, 0x5a);
+
 
 	return 0;
 }
