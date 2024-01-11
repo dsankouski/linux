@@ -35,6 +35,225 @@ struct s6e3ha8 {
 	bool prepared;
 };
 
+/*
+<3>[ 1027.506858]  [2:crtc_commit:117:  443] msm-dsi-display:[dsi_display_prepare] ++
+<6>[ 1027.529912]  [2:crtc_commit:117:  443] dsi-ctrl:[_dsi_ctrl_setup_isr] [DSI_0] IRQ 1011 registered
+<6>[ 1027.535755]  [3: irq/352-sec_ts:  320] sec_ts 30-0048: [sec_input] [R] tID:0 mc:3 tc:0 lx:3688 ly:1957 f:-1 v:0130 cal:A2(00) id(0,0) p:0 noise:0 lp:(40/-1) C01T0122.LCIA.L F0201 D0C000
+<3>[ 1027.536751]  [2:crtc_commit:117:  443] msm-dsi-display:[dsi_display_prepare] --
+<3>[ 1027.536807]  [2:crtc_commit:117:  443] msm-dsi-display:[dsi_display_enable] ++
+<3>[ 1027.536860]  [2:crtc_commit:117:  443] msm-dsi-panel:[dsi_panel_enable:4065] ++
+<6>[ 1027.536912]  [2:crtc_commit:117:  443] [SDE] ss_panel_on_pre : +
+<6>[ 1027.536959]  [2:crtc_commit:117:  443] [SDE] samsung_panel_on_pre : +: ndx=0
+<6>[ 1027.537011]  [2:crtc_commit:117:  443] [SDE] ss_panel_attach_set : panel_attach_status : 1
+<6>[ 1027.537068]  [2:crtc_commit:117:  443] [SDE] samsung_panel_on_pre : -: ndx=0
+<6>[ 1027.537117]  [2:crtc_commit:117:  443] [SDE] ss_panel_on_pre : -
+<6>[ 1027.537176]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 9f a5 a5
+<6>[ 1027.537264]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 f0 5a 5a
+<6>[ 1027.537346]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (01) 07 00 00 02 00 01 01
+<6>[ 1027.537426]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 f0 a5 a5
+<6>[ 1027.537506]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (01) 05 01 00 0a 00 01 11
+<6>[ 1027.547713]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 f0 5a 5a
+<6>[ 1027.547797]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (02) 29 00 00 02 00 02 b0 07
+<6>[ 1027.547878]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 f2 3c 10
+<6>[ 1027.547961]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (02) 29 00 00 02 00 02 b0 0b
+<6>[ 1027.548041]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (02) 29 00 00 02 00 02 f2 30
+<6>[ 1027.548123]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (05) 29 00 00 02 00 05 2a 00 00 05 9f
+<6>[ 1027.548208]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (05) 29 00 00 02 00 05 2b 00 00 0b 8f
+<6>[ 1027.548292]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (02) 29 00 00 02 00 02 ba 01
+<6>[ 1027.548373]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 f0 a5 a5
+<6>[ 1027.548455]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (02) 29 00 00 02 00 02 35 00
+<6>[ 1027.548536]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 f0 5a 5a
+<6>[ 1027.548617]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (02) 29 00 00 02 00 02 ed 4c
+<6>[ 1027.548697]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 f0 a5 a5
+<6>[ 1027.548778]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 fc 5a 5a
+<6>[ 1027.548861]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (06) 29 00 00 02 00 06 c5 0d 10 b4 3e 01
+<6>[ 1027.548946]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 fc a5 a5
+<6>[ 1027.549029]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 f0 5a 5a
+<6>[ 1027.549113]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (10) 29 00 00 02 00 0a b9 00 b0 81 09 00 00 00 11 03
+<6>[ 1027.549203]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 f0 a5 a5
+<6>[ 1027.549285]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 f0 5a 5a
+<6>[ 1027.549366]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (02) 29 00 00 02 00 02 b0 03
+<6>[ 1027.549446]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (02) 29 01 00 0a 00 02 f6 43
+<6>[ 1027.549816]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 f0 a5 a5
+<6>[ 1027.549900]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 f0 5a 5a
+<6>[ 1027.549993]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (35) 29 00 00 02 00 23 ca 07 00 00 00 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 00 00 00
+<6>[ 1027.550141]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 b1 00 0c
+<6>[ 1027.550231]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (23) 29 00 00 02 00 17 b5 19 dc 16 01 34 67 9a cd 01 22 33 44 00 00 05 55 cc 0c 01 11 11 10
+<6>[ 1027.550341]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 f4 eb 28
+<6>[ 1027.550423]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (02) 29 00 00 02 00 02 f7 03
+<6>[ 1027.550502]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 02 00 03 f0 a5 a5
+<6>[ 1027.550584]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 01 00 0a 00 03 9f 5a 5a
+<6>[ 1027.550855]  [2:crtc_commit:117:  443] [SDE] ss_panel_on_post : +
+<3>[ 1027.550903]  [2:crtc_commit:117:  443] [SDE] self_mask_img_write : ++
+<6>[ 1027.550952]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(31): samsung,level1_key_enable_tx_cmds_revA ++
+<6>[ 1027.551028]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 01 00 08 00 03 f0 5a 5a
+<6>[ 1027.551168]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(31): samsung,level1_key_enable_tx_cmds_revA --
+<6>[ 1027.551238]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(155): samsung,self_mask_mem_setting ++
+<6>[ 1027.551312]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (02) 29 00 00 00 00 02 7a 00
+<6>[ 1027.551393]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (02) 29 01 00 08 00 02 75 10
+<6>[ 1027.551530]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(155): samsung,self_mask_mem_setting --
+<6>[ 1027.551595]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(158): TX_SELF_MASK_IMAGE not parsed from DTSI ++
+<6>[ 1027.551702]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 4c c0 d0 41 f6 45 ee 41 e9 45 dd 41 dc 46 cc 41 be 45 bb 41 b1 45 aa 41 a4 45 99 41 96 46 88 41 78 45 77 41 6b 45 66 41 5e 45 55 41 51 46 44 46 33 41 26 64 22 41 18 67 11 41 0e 82 ce 41 0d 67 11 41 18 64 22 41 26 46 33 46 44 41 51 45 55 41 5e 45 66 41 6b 45 77 41 78 46 88 41 96 45 99 41 a3
+<6>[ 1027.552014]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 45 aa 41 b0 45 bb 41 bd 46 cc 41 db 45 dd 41 e8 45 ee 41 f5 c1 67 41 ef 41 ee 41 e9 42 dd 41 d1 41 cc 41 cb 42 bb 41 b3 42 aa 41 a1 43 99 43 88 41 7f 43 77 43 66 41 5d 43 55 43 44 41 3b 43 33 41 2f 46 22 46 11 41 04 84 0a 41 03 46 11 41 21 45 22 41 2e 43 33 41 3a 43 44 41 54 42 55 41 5c
+<6>[ 1027.552206]  [3: irq/352-sec_ts:  320] sec_ts 30-0048: [sec_input] [P] tID:0 x:3607 y:1804 z:58 major:15 minor:15 tc:1 type:0 noise:0
+<6>[ 1027.552324]  [3:    kworker/3:2:  812] cpufreq_limit_get: touch min same values(1132800,0) entered. just return.
+<6>[ 1027.552401]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 43 66 41 76 42 77 41 7f 43 88 41 98 42 99 41 a1 42 aa 41 b3 42 bb 41 cb 41 cc 41 d1 42 dd 41 e9 41 ee 41 ef c1 10 41 f9 41 e9 41 d9 41 cc 41 be 41 b3 41 a9 41 99 41 94 41 88 41 85 41 77 41 75 42 66 42 55 41 45 41 44 41 3d 42 33 41 25 41 22 41 1f 42 11 41 08 84 76 41 07 42 11 41 1f 41 22
+<6>[ 1027.552713]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 25 42 33 41 3d 41 44 41 45 42 55 42 66 41 75 41 77 41 84 41 88 41 94 41 99 41 a9 41 b3 41 be 41 cc 41 d9 41 e9 41 f9 c0 e5 41 f9 41 e3 41 cf 41 b9 41 a5 41 91 41 7e 41 6a 41 55 41 40 41 2d 41 1c 41 0b 84 ae 41 0a 41 1a 41 2b 41 3f 41 53 41 69 41 7d 41 91 41 a4 41 b8 41 cf 41 e2 41 f9
+<6>[ 1027.553025]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c c0 d1 41 ef 41 cd 41 aa 41 87 41 65 41 41 41 1f 41 02 84 c6 41 02 41 1f 41 41 41 64 41 87 41 aa 41 cd 41 ef c0 c4 41 de 41 b3 41 88 41 5d 41 36 41 14 84 d6 41 13 41 36 41 5d 41 88 41 b3 41 de c0 b9 41 d9 41 a4 41 71 41 40 41 10 84 e2 41 10 41 40 41 70 41 a2 41 d8 41 fe c0 ae 41 f6 41 c1
+<6>[ 1027.553338]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 82 41 49 41 12 84 ec 41 10 41 46 41 7e 41 b9 41 f2 c0 a6 41 fd 41 ca 41 82 41 3c 41 07 84 f4 41 03 41 32 41 79 41 c6 41 fc c0 9f 41 ed 41 a8 41 5f 41 15 84 fc 41 0f 41 50 41 9c 41 e9 c0 99 41 e6 41 8e 41 3a 41 03 85 02 41 02 41 39 41 8a 41 df c0 93 41 f3 41 a3 41 47 41 03 85 09 41 34
+<6>[ 1027.553645]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 8a 41 e5 c0 8d 41 fc 41 b6 41 5b 41 0b 85 0e 41 03 41 4d 41 b0 41 fa c0 88 41 e7 41 84 41 1e 85 14 41 1b 41 83 41 e8 c0 84 41 c4 41 56 41 05 85 18 41 07 41 5c 41 c9 c0 7f 41 f9 41 a1 41 33 85 1e 41 36 41 a4 41 fa c0 7a 41 f7 41 92 41 1d 85 22 41 22 41 a0 41 fb c0 76 41 f9 41 93 41 1a
+<6>[ 1027.553955]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 85 26 41 27 41 a5 41 fd c0 72 41 fc 41 a1 41 21 85 2a 41 2c 41 ab 41 fe c0 6f 41 bf 41 2a 85 2e 41 32 41 c4 c0 6c 41 e5 41 59 85 31 41 01 41 5d 41 e6 c0 68 41 f9 41 8b 41 0c 85 34 41 0e 41 8c 41 fa c0 65 41 bd 41 2a 85 38 41 2a 41 bc c0 62 41 f2 41 63 85 3c 41 62 41 f1 c0 5f 41 c3 41 21
+<6>[ 1027.554266]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 85 3e 41 21 41 c2 c0 5c 41 f8 41 76 41 02 85 40 41 02 41 76 41 f8 c0 59 41 d0 41 2e 85 44 41 2d 41 d0 c0 57 41 94 41 07 85 46 41 07 41 95 c0 54 41 f9 41 66 85 4a 41 66 41 f9 c0 51 41 e9 41 3b 85 4c 41 3c 41 e9 c0 4f 41 cd 41 1d 85 4e 41 1d 41 cd c0 4d 41 a6 41 09 85 50 41 09 41 a7 c0 4b
+<6>[ 1027.554575]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 7c 41 01 85 52 41 01 41 7c c0 48 41 fe 41 6e 85 56 41 6e 41 fe c0 45 41 fc 41 65 85 58 41 65 41 fc c0 43 41 fc 41 5c 85 5a 41 5b 41 fc c0 41 41 f9 41 53 85 5c 41 52 41 f9 c0 3f 41 f7 41 4b 85 5e 41 4a 41 f6 c0 3d 41 fc 41 4e 85 60 41 4e 41 fc c0 3c 41 69 85 62 41 66 41 fe c0 3a 41 7c
+<6>[ 1027.554882]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 85 64 41 78 c0 39 41 96 85 66 41 96 c0 37 41 b1 41 03 85 66 41 03 41 b1 c0 35 41 c8 41 0a 85 68 41 0a 41 c8 c0 33 41 e5 41 16 85 6a 41 15 41 e4 c0 31 41 fc 41 40 85 6c 41 3c 41 fb c0 30 41 7d 85 6e 41 76 c0 2f 41 bc 41 03 85 6e 41 01 41 b3 c0 2d 41 e7 41 18 85 70 41 12 41 e0 c0 2b 41 fc
+<6>[ 1027.555189]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 43 85 72 41 37 41 f9 c0 2a 41 83 85 74 41 72 c0 29 41 c7 41 04 85 74 41 02 41 c0 c0 27 41 f4 41 22 85 76 41 21 41 f3 c0 26 41 74 85 78 41 6a c0 25 41 d3 41 04 85 78 41 01 41 c1 c0 23 41 fe 41 41 85 7a 41 32 41 fd c0 22 41 a0 85 7c 41 9a c0 21 41 ec 41 12 85 7c 41 12 41 ec c0 20 41 70
+<6>[ 1027.555508]  [3: irq/352-sec_ts:  320] sec_ts 30-0048: [sec_input] sec_ts_read_event: STATUS 1d 3 2 2 2 2 0 0
+<6>[ 1027.555570]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 85 7e 41 6f c0 1f 41 db 41 05 85 7e 41 05 41 db c0 1e 41 53 85 80 41 52 c0 1d 41 cb 41 01 85 80 41 01 41 cb c0 1c 41 4c 85 82 41 4b c0 1b 41 cb 41 01 85 83 41 c9 c0 1a 41 4f 85 84 41 4b c0 19 41 db 41 02 85 84 41 01 41 d5 c0 18 41 6d 85 86 41 6a c0 17 41 ef 41 0c 85 86 41 0c 41 ef c0 16
+<6>[ 1027.555870]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 8b 85 88 41 8b c0 15 41 fb 41 1e 85 88 41 1e 41 fb c0 14 41 ab 85 8a 41 a9 c0 14 41 40 85 8a 41 38 c0 13 41 d6 85 8c 41 d5 c0 12 41 7a 85 8c 41 78 c0 11 41 fe 41 1f 85 8c 41 1e 41 fd c0 10 41 c0 85 8e 41 c0 c0 10 41 64 85 8e 41 63 c0 0f 41 f7 41 10 85 8e 41 10 41 f7 c0 0e 41 ab 85 90
+<6>[ 1027.556181]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 ab c0 0e 41 4f 85 90 41 4f c0 0d 41 f3 41 08 85 90 41 09 41 f4 c0 0c 41 aa 85 92 41 af c0 0c 41 60 85 92 41 60 c0 0b 41 fe 41 1a 85 92 41 16 41 fd c0 0a 41 c8 85 94 41 cb c0 0a 41 89 85 94 41 85 c0 0a 41 4c 85 94 41 3f c0 09 41 f5 41 09 85 94 41 05 41 f4 c0 08 41 be 85 96 41 bc c0 08
+<6>[ 1027.556492]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 82 85 96 41 7f c0 08 41 44 85 96 41 44 c0 07 41 fc 41 0c 85 96 41 0c 41 fc c0 06 41 d6 85 98 41 d6 c0 06 41 a3 85 98 41 a3 c0 06 41 71 85 98 41 71 c0 06 41 40 85 98 41 40 c0 06 41 12 85 98 41 12 c0 05 41 e4 85 9a 41 e6 c0 04 41 b7 85 9a 41 ba c0 04 41 8b 85 9a 41 8e c0 04 41 67 85 9a
+<6>[ 1027.556801]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 65 c0 04 41 44 85 9a 41 3d c0 04 41 21 85 9a 41 14 c0 03 41 fb 41 04 85 9b 41 ed c0 02 41 dd 85 9c 41 cc c0 02 41 b8 85 9c 41 ae c0 02 41 96 85 9c 41 90 c0 02 41 74 85 9c 41 72 c0 02 41 58 85 9c 41 58 c0 02 41 42 85 9c 41 42 c0 02 41 27 85 9c 41 27 c0 02 41 10 85 9c 41 10 c0 01 41 f9
+<6>[ 1027.557112]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 85 9e 41 f9 41 e6 85 9e 41 e6 41 d0 85 9e 41 d2 41 bc 85 9e 41 be 41 ac 85 9e 41 ab 41 9e 85 9e 41 98 41 90 85 9e 41 82 41 81 85 9e 41 70 41 73 85 9e 41 5f 41 64 85 9e 41 58 41 56 85 9e 41 4b 41 47 85 9e 41 41 41 3c 85 9e 42 3c 85 9e 41 35 41 2d 85 9e 42 2d 85 9e 42 2d 85 9e 41 28 41 1f
+<6>[ 1027.557423]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 85 9e 42 1e 85 9e 41 1e 41 1c 85 9e 41 1b 41 0f 85 9e 42 0f 85 9e 42 0f 85 9e 41 0e bf ff bf ff 97 e2 41 01 85 9f 41 0f 85 9f 41 0f 85 9f 41 0f 85 9f 41 0f 85 9f 41 1a 85 9e 41 05 41 1e 85 9e 41 0f 41 1e 85 9e 41 11 41 1e 85 9e 41 1e 41 2b 85 9e 41 1e 41 2d 85 9e 41 2d 41 31 85 9e 41 2d
+<6>[ 1027.557735]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 3c 85 9e 41 39 41 40 85 9e 41 3c 41 4b 85 9e 41 46 41 4e 85 9e 41 4b 41 5b 85 9e 41 56 41 69 85 9e 41 65 41 77 85 9e 41 74 41 85 85 9e 41 82 41 93 85 9e 41 91 41 a0 85 9e 41 a0 41 b5 85 9e 41 b3 41 cb 85 9e 41 c9 41 e0 85 9e 41 dc 41 f6 85 9e 41 f4 c0 01 41 0b 85 9c 41 08 c0 02 41 24
+<6>[ 1027.558045]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 85 9c 41 20 c0 02 41 41 85 9c 41 3b c0 02 41 5d 85 9c 41 57 c0 02 41 7b 85 9c 41 75 c0 02 41 97 85 9c 41 91 c0 02 41 b4 85 9c 41 ad c0 02 41 d5 85 9c 41 cf c0 02 41 f7 41 01 85 9b 41 f1 c0 03 41 1d 85 9a 41 18 c0 04 41 3f 85 9a 41 3b c0 04 41 64 85 9a 41 60 c0 04 41 87 85 9a 41 84 c0 04
+<6>[ 1027.558357]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 b3 85 9a 41 ad c0 04 41 de 85 9a 41 df c0 04 41 fe 41 0e 85 98 41 15 c0 06 41 40 85 98 41 41 c0 06 41 71 85 98 41 6c c0 06 41 a7 85 98 41 9c c0 06 41 df 85 98 41 d7 c0 07 41 1b 85 96 41 12 41 fe c0 07 41 54 85 96 41 49 c0 08 41 8d 85 96 41 83 c0 08 41 ca 85 96 41 be c0 08 41 fc 41 0f
+<6>[ 1027.558672]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 85 94 41 08 41 f6 c0 09 41 4d 85 94 41 43 c0 0a 41 8f 85 94 41 86 c0 0a 41 d1 85 94 41 ca c0 0a 41 fe 41 14 85 92 41 11 41 fc c0 0b 41 5c 85 92 41 57 c0 0c 41 ad 85 92 41 ab c0 0c 41 f5 41 0b 85 90 41 09 41 f4 c0 0d 41 53 85 90 41 52 c0 0e 41 a5 85 90 41 a4 c0 0e 41 f0 41 08 85 8e 41 08
+<6>[ 1027.558988]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 f0 c0 0f 41 55 85 8e 41 54 c0 10 41 b2 85 8e 41 b0 c0 10 41 fa 41 15 85 8c 41 12 41 f9 c0 11 41 6c 85 8c 41 67 c0 12 41 cb 85 8c 41 c4 c0 13 41 37 85 8a 41 2c c0 14 41 a1 85 8a 41 9a c0 14 41 f9 41 19 85 88 41 14 41 f6 c0 15 41 83 85 88 41 74 c0 16 41 e6 41 06 85 86 41 04 41 e1 c0 17
+<6>[ 1027.559295]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 67 85 86 41 5c c0 18 41 de 41 04 85 84 41 02 41 d8 c0 19 41 5f 85 84 41 59 c0 1a 41 d8 41 02 85 82 41 02 41 d5 c0 1b 41 56 85 82 41 55 c0 1c 41 d7 41 04 85 80 41 04 41 d7 c0 1d 41 67 85 80 41 65 c0 1e 41 e6 41 0a 85 7e 41 0a 41 e5 c0 1f 41 7c 85 7e 41 7a c0 20 41 f1 41 15 85 7c 41 14
+<6>[ 1027.559607]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 f0 c0 21 41 a2 85 7c 41 9f c0 23 41 46 85 7a 41 43 41 fe c0 23 41 dd 41 0b 85 78 41 09 41 dc c0 25 41 8b 85 78 41 87 c0 26 41 fc 41 32 85 76 41 2f 41 fb c0 27 41 d0 41 06 85 74 41 06 41 cd c0 29 41 8d 85 74 41 8b c0 2a 41 fe 41 43 85 72 41 44 41 fe c0 2b 41 e6 41 13 85 70 41 15 41 e6
+<6>[ 1027.559919]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c c0 2d 41 ae 85 6f 41 01 41 b2 c0 2f 41 6b 85 6e 41 6f c0 30 41 f9 41 40 85 6c 41 42 41 fb c0 31 41 ea 41 23 85 6a 41 24 41 ec c0 33 41 d2 41 0f 85 68 41 0f 41 d4 c0 35 41 b1 41 03 85 66 41 03 41 b2 c0 37 41 89 85 66 41 89 c0 39 41 78 85 64 41 78 c0 3b 41 69 85 62 41 69 41 fe c0 3b 41 fc
+<6>[ 1027.560334]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 5a 85 60 41 5a 41 fc c0 3d 41 f9 41 4c 85 5e 41 4d 41 f9 c0 3f 41 f5 41 48 85 5c 41 49 41 f5 c0 41 41 f9 41 50 85 5a 41 51 41 f9 c0 43 41 fb 41 5d 85 58 41 5c 41 fc c0 45 41 fe 41 73 85 56 41 68 41 fd c0 48 41 8d 41 01 85 53 41 76 41 fe c0 4a 41 9d 41 05 85 50 41 06 41 9a c0 4d 41 be
+<6>[ 1027.560651]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 14 85 4e 41 16 41 c2 c0 4f 41 df 41 2f 85 4c 41 2f 41 e0 c0 51 41 f4 41 57 85 4a 41 53 41 f3 c0 54 41 9b 41 0b 85 46 41 09 41 95 41 fe c0 56 41 d8 41 32 85 44 41 2e 41 d4 c0 59 41 f9 41 74 41 02 85 40 41 01 41 6e 41 f7 c0 5c 41 bb 41 1f 85 3e 41 1b 41 b6 c0 5f 41 f3 41 6e 41 02 85 3a
+<6>[ 1027.560961]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 02 41 6c 41 f1 c0 62 41 c7 41 2c 85 38 41 2e 41 c8 c0 65 41 f9 41 81 41 07 85 34 41 0a 41 89 41 fb c0 68 41 db 41 56 41 01 85 31 41 55 41 e1 c0 6c 41 c8 41 40 85 2e 41 31 41 bf c0 70 41 b5 41 2b 85 2a 41 24 41 a7 41 fd c0 72 41 fd 41 a5 41 2d 85 26 41 1a 41 98 41 fb c0 76 41 fe 41 b0
+<6>[ 1027.561272]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 37 85 22 41 22 41 97 41 f7 c0 7b 41 bb 41 41 85 1e 41 38 41 a7 41 fb c0 7f 41 c7 41 52 41 03 85 18 41 09 41 62 41 cc c0 84 41 e1 41 7f 41 22 85 14 41 24 41 8c 41 ed c0 88 41 fd 41 b9 41 59 41 0a 85 0e 41 09 41 52 41 b7 41 fd c0 8d 41 f3 41 a3 41 4b 41 07 85 08 41 05 41 4a 41 a2 41 f1
+<6>[ 1027.561582]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c c0 93 41 f0 41 a3 41 52 41 0c 85 02 41 06 41 44 41 99 41 ec c0 99 41 f7 41 b8 41 6a 41 1f 84 fc 41 1b 41 64 41 ae 41 f3 c0 a0 41 d1 41 87 41 48 41 0d 84 f4 41 0e 41 48 41 86 41 ce 41 fe c0 a6 41 fc 41 ce 41 91 41 54 41 18 84 ec 41 1b 41 59 41 93 41 d0 41 fc c0 af 41 dd 41 a6 41 6e 41 3c
+<6>[ 1027.561893]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 11 84 e2 41 10 41 3c 41 70 41 a6 41 e1 c0 b9 41 e3 41 b9 41 8b 41 61 41 35 41 10 84 d6 41 10 41 35 41 61 41 8b 41 b8 41 e3 c0 c4 41 ea 41 c5 41 a5 41 87 41 6b 41 4d 41 30 41 14 84 c6 41 14 41 30 41 4d 41 6b 41 87 41 a4 41 c5 41 e9 c0 d2 41 f6 41 d8 41 bc 41 a4 41 91 41 7d 41 69 41 54
+<6>[ 1027.562208]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 3f 41 2c 41 18 41 04 84 ae 41 04 41 18 41 2b 41 3f 41 53 41 69 41 7d 41 90 41 a4 41 bb 41 d8 41 f6 c0 e6 41 f3 41 e5 41 d7 41 ca 41 bb 41 b5 41 aa 41 a3 41 99 41 92 41 88 41 80 41 77 41 6f 41 66 41 5c 41 55 41 4a 41 44 41 42 42 33 41 2a 42 22 41 13 41 11 41 0c 84 76 41 0c 41 11 41 13
+<6>[ 1027.562519]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 42 22 41 2a 42 33 41 42 41 44 41 4a 41 55 41 5c 41 66 41 6e 41 77 41 7f 41 88 41 91 41 99 41 a3 41 aa 41 b5 41 bb 41 ca 41 d7 41 e5 41 f3 c1 10 41 f3 41 ee 41 ed 42 dd 41 d5 42 cc 41 bd 41 bb 41 b6 42 aa 41 a5 43 99 41 8b 42 88 41 82 43 77 41 68 42 66 41 5f 43 55 41 45 42 44 41 3c 43 33
+<6>[ 1027.562828]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 2f 45 22 41 21 46 11 41 02 84 0a 41 01 46 11 41 1f 45 22 41 2d 43 33 41 3a 43 44 43 55 41 5e 42 66 41 67 43 77 41 81 42 88 41 8a 43 99 41 a4 42 aa 41 b6 41 bb 41 bd 42 cc 41 d5 42 dd 41 ec 41 ee 41 f3 c1 67 41 f3 45 ee 41 e5 45 dd 41 d7 45 cc 41 c9 46 bb 46 aa 41 9c 45 99 41 8f 45 88
+<6>[ 1027.563138]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (97) 29 01 00 08 00 61 5c 41 81 45 77 41 73 45 66 41 65 46 55 41 46 45 44 41 38 45 33 41 2a 61 22 41 15 68 11 41 0c 82 d4 41 0c 68 11 41 15 61 22 41 2a 45 33 41 38 45 44 41 46 46 55 41 64 45 66 41 72 45 77 41 80 45 88 41 8e 45 99 41 9c 46 aa 46 bb 41 c8 45 cc 41 d6 45 dd 41 e4 45 ee 41 f2 c0 d0 00 00 00 00 00 00
+<6>[ 1027.563413]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(158): TX_SELF_MASK_IMAGE not parsed from DTSI --
+<6>[ 1027.563485]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(32): samsung,level1_key_disable_tx_cmds_revA ++
+<6>[ 1027.563563]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 01 00 08 00 03 f0 a5 a5
+<6>[ 1027.563705]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(32): samsung,level1_key_disable_tx_cmds_revA --
+<3>[ 1027.563772]  [2:crtc_commit:117:  443] [SDE] self_mask_img_write : --
+<3>[ 1027.563821]  [2:crtc_commit:117:  443] [SDE] self_mask_on : ++ (1)
+<6>[ 1027.563866]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(156): samsung,self_mask_on ++
+<6>[ 1027.563935]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 5a 5a
+<6>[ 1027.564023]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (16) 29 00 00 00 00 10 7a 01 00 00 00 95 0a fa 0b 8f 09 0f 00 00 00 00
+<6>[ 1027.564124]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 01 00 08 00 03 f0 a5 a5
+<6>[ 1027.564264]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(156): samsung,self_mask_on --
+<3>[ 1027.564324]  [2:crtc_commit:117:  443] [SDE] self_mask_on : --
+<6>[ 1027.564374]  [2:crtc_commit:117:  443] [SDE] set_normal_br_values : pac_cd_idx (0) cd_idx (0) cd (2) interpolation_cd (2)
+<6>[ 1027.564451]  [2:crtc_commit:117:  443] [SDE] ss_acl_on : gradual_acl: 1, acl per: 0x4a
+<6>[ 1027.564516]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(27): samsung,brightness_tx_cmds_revA ++
+<6>[ 1027.564589]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 5a 5a
+<6>[ 1027.564671]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc 5a 5a
+<6>[ 1027.564753]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 b1 0b 76
+<6>[ 1027.564834]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 a5 a5
+<6>[ 1027.564914]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc a5 a5
+<6>[ 1027.564994]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 5a 5a
+<6>[ 1027.565075]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc 5a 5a
+<6>[ 1027.565162]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (17) 29 00 00 00 00 11 b4 00 55 40 ff 26 4a 63 55 55 55 3f b7 12 00 00 20
+<6>[ 1027.565262]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (02) 29 00 00 00 00 02 55 02
+<6>[ 1027.565342]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 a5 a5
+<6>[ 1027.565423]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc a5 a5
+<6>[ 1027.565503]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 5a 5a
+<6>[ 1027.565584]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc 5a 5a
+<6>[ 1027.565671]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (24) 29 00 00 00 00 18 b5 14 cc 12 01 34 67 9a cd 01 22 33 44 00 00 05 55 cc 0c 01 11 11 10 13
+<6>[ 1027.565780]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 a5 a5
+<6>[ 1027.565861]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc a5 a5
+<6>[ 1027.565941]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 5a 5a
+<6>[ 1027.566021]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc 5a 5a
+<6>[ 1027.566102]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f4 eb 23
+<6>[ 1027.566183]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 01 00 08 00 03 f0 a5 a5
+<6>[ 1027.566330]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc a5 a5
+<6>[ 1027.566413]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 5a 5a
+<6>[ 1027.566495]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc 5a 5a
+<6>[ 1027.566586]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (36) 29 00 00 00 00 24 b8 15 12 00 00 13 00 00 00 00 00 00 00 00 00 00 00 00 00 25 69 ca 8c 06 45 3c 6f 00 00 00 00 00 00 00 00 00
+<6>[ 1027.566713]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 a5 a5
+<6>[ 1027.566793]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc a5 a5
+<6>[ 1027.566875]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 5a 5a
+<6>[ 1027.566956]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc 5a 5a
+<6>[ 1027.567048]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (35) 29 00 00 00 00 23 ca 00 8c a0 8f 8e 8d 8d 8c 8b 89 8b 8f 8a 8c 97 8b 8a 96 8b 8e a0 93 a3 b7 a8 a2 9b a6 42 49 42 00 00 00
+<6>[ 1027.567172]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (02) 29 01 00 08 00 02 f7 03
+<6>[ 1027.567335]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (60) 29 00 00 00 00 3c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+<6>[ 1027.567496]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 a5 a5
+<6>[ 1027.567578]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 01 00 08 00 03 fc a5 a5
+<6>[ 1027.567716]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(27): samsung,brightness_tx_cmds_revA --
+<6>[ 1027.567784]  [2:crtc_commit:117:  443] [SDE] ss_brightness_dcs : level : 0  candela : 2CD hbm : 0 (0)
+<3>[ 1027.567854]  [2:crtc_commit:117:  443] [SDE_mdnie] hbm : 0 mdnie_bypass : 0 mdnie_accessibility : 0  mdnie_app: 0 mdnie_mode : 4 hdr : 0 night_mode_enable : 0
+<6>[ 1027.567942]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(60): samsung,mdnie_tx_cmds_revA ++
+<6>[ 1027.568012]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 39 00 00 00 00 03 f0 5a 5a
+<6>[ 1027.568110]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (56) 39 01 00 08 00 38 df 01 6a 9a 25 1a 16 2a 00 37 5a 00 4e c5 00 5d 17 00 30 c3 ff 00 00 ff ff 00 ff 00 ff ff ff ff 00 ff ff 00 ff 00 ff 00 00 ff ff 00 ff 00 ff 00 00 ff ff 00 ff 00 ff 00
+<6>[ 1027.568388]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (188) 39 01 00 08 00 bc de 00 40 04 00 00 00 00 00 00 00 04 00 00 00 00 00 00 00 04 00 00 00 30 01 00 70 01 34 01 40 66 03 01 55 00 08 08 10 20 40 60 00 40 00 50 00 60 00 70 00 80 00 80 00 80 00 00 20 40 60 01 40 01 80 01 80 01 80 02 00 00 00 00 00 00 00 00 40 03 b6 23 24 00 72 01 00 0d 00 04 07 40 00 6e 82 e6 ff 00 ff 00 00 02 00 02 00 14 00 01 00 01 00 10 00 00 28 3c 04 0f 01 00 00 08 10 18 20 28 30 38 40 48 50 58 60 68 70 78 80 88 90 98 a0 a8 b0 b8 c0 c8 d0 d8 e0 e8 f0 f8 01 00 00 08 10 18 20 28 30 38 40 48 50 58 60 68 70 78 80 88 90 98 a0 a8 b0 b8 c0 c8 d0 d8 e0 e8 f0 f8 01 00
+<6>[ 1027.568801]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (20) 39 00 00 00 00 14 dd 01 00 07 f0 7f 7f 00 00 00 00 00 00 00 00 00 00 00 04 01
+<6>[ 1027.568920]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (45) 39 00 00 00 00 2d e2 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 40 00 80 01 00 80 80 80 80 80 80 80 80 80 80 80 80
+<6>[ 1027.569059]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 39 01 00 08 00 03 f0 a5 a5
+<6>[ 1027.569199]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(60): samsung,mdnie_tx_cmds_revA --
+<6>[ 1027.569276]  [2:crtc_commit:117:  443] [SDE] esd_irq_enable : clear esd irq pending status
+<6>[ 1027.569365]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(80): samsung,copr_enable_tx_cmds_revA ++
+<6>[ 1027.569439]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 5a 5a
+<6>[ 1027.569528]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (20) 29 00 00 00 00 14 e1 07 15 15 00 00 00 00 00 00 8c a0 00 00 00 00 00 00 00 00
+<6>[ 1027.569633]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 01 00 08 00 03 f0 a5 a5
+<6>[ 1027.569772]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(80): samsung,copr_enable_tx_cmds_revA --
+<6>[ 1027.569836]  [2:crtc_commit:117:  443] [SDE] ss_panel_on_post : -
+<3>[ 1027.569881]  [2:crtc_commit:117:  443] msm-dsi-panel:[dsi_panel_enable:4081] --
+<6>[ 1027.569934]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(29): samsung,level0_key_enable_tx_cmds_revA ++
+<6>[ 1027.570010]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 01 00 08 00 03 9f a5 a5
+<6>[ 1027.570174]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(29): samsung,level0_key_enable_tx_cmds_revA --
+<6>[ 1027.570293]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (128) 0a 01 00 0a 00 80 11 00 00 89 30 80 0b 90 05 a0 00 28 02 d0 02 d0 02 00 02 68 00 20 04 6c 00 0a 00 0c 02 77 01 e9 18 00 10 f0 03 0c 20 00 06 0b 0b 33 0e 1c 2a 38 46 54 62 69 70 77 79 7b 7d 7e 01 02 01 00 09 40 09 be 19 fc 19 fa 19 f8 1a 38 1a 78 1a b6 2a f6 2b 34 2b 74 3b 74 6b f4 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+<6>[ 1027.580830]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(30): samsung,level0_key_disable_tx_cmds_revA ++
+<6>[ 1027.580910]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 01 00 08 00 03 9f 5a 5a
+<6>[ 1027.581046]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(30): samsung,level0_key_disable_tx_cmds_revA --
+<3>[ 1027.581118]  [2:crtc_commit:117:  443] msm-dsi-display:[dsi_display_enable] --
+<6>[ 1027.581817]  [3:       recovery:  607] [SDE] set_normal_br_values : pac_cd_idx (406) cd_idx (57) cd (223) interpolation_cd (222)
+<6>[ 1027.581895]  [3:       recovery:  607] [SDE] ss_acl_on : gradual_acl: 1, acl per: 0x4a
+<6>[ 1027.581956]  [3:       recovery:  607] [SDE] ss_send_cmd : Send cmd(27): samsung,brightness_tx_cmds_revA ++
+<6>[ 1027.582026]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 5a 5a
+<6>[ 1027.582103]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc 5a 5a
+<6>[ 1027.582179]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 b1 02 ce
+<6>[ 1027.582256]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 a5 a5
+<6>[ 1027.582331]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc a5 a5
+<6>[ 1027.582407]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 5a 5a
+<6>[ 1027.582482]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc 5a 5a
+<6>[ 1027.582562]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (17) 29 00 00 00 00 11 b4 00 55 40 ff 26 4a 63 55 55 55 3f b7 12 00 00 20
+<6>[ 1027.582657]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (02) 29 00 00 00 00 02 55 02
+<6>[ 1027.582730]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 a5 a5
+<6>[ 1027.582805]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc a5 a5
+<6>[ 1027.582880]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 5a 5a
+<6>[ 1027.582954]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc 5a 5a
+<6>[ 1027.583037]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (24) 29 00 00 00 00 18 b5 14 dc 1e 01 34 67 9a cd 01 22 33 44 00 00 05 55 cc 0c 01 11 11 10 13
+<6>[ 1027.583141]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 a5 a5
+<6>[ 1027.583216]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc a5 a5
+<6>[ 1027.583292]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 5a 5a
+<6>[ 1027.583367]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc 5a 5a
+<6>[ 1027.583443]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f4 eb 23
+<6>[ 1027.583517]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 01 00 08 00 03 f0 a5 a5
+<6>[ 1027.583676]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc a5 a5
+<6>[ 1027.583754]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 5a 5a
+<6>[ 1027.583830]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc 5a 5a
+<6>[ 1027.583917]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (36) 29 00 00 00 00 24 b8 15 12 00 00 13 00 00 00 00 00 00 00 00 00 00 00 00 00 25 69 ca 8c 06 45 3c 6f 28 28 28 0e 0e 0e 0d 0d 0d
+<6>[ 1027.584039]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 a5 a5
+<6>[ 1027.584114]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc a5 a5
+<6>[ 1027.584189]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 5a 5a
+<6>[ 1027.584262]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 fc 5a 5a
+<6>[ 1027.584347]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (35) 29 00 00 00 00 23 ca 00 df e3 e0 85 84 83 85 83 84 81 82 82 81 81 81 80 80 80 81 81 80 85 86 83 91 85 88 7a 7c 7a 00 00 00
+<6>[ 1027.584464]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (02) 29 01 00 08 00 02 f7 03
+<6>[ 1027.584629]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (60) 29 00 00 00 00 3c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+<6>[ 1027.584784]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 f0 a5 a5
+<6>[ 1027.584860]  [3:       recovery:  607] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 01 00 08 00 03 fc a5 a5
+<6>[ 1027.585004]  [3:       recovery:  607] [SDE] ss_send_cmd : Send cmd(27): samsung,brightness_tx_cmds_revA --
+<6>[ 1027.585070]  [3:       recovery:  607] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[ 1027.585135]  [3:       recovery:  607] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<3>[ 1027.680169]  [3:   msm_watchdog:   75] [pet_watchdog] last_count : 4cc9b, new_count : 4cc9b, bark_time : 57fdf, bite_time : 6ffd6
+<6>[ 1027.725289]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(25): samsung,display_on_tx_cmds_revA ++
+<6>[ 1027.725371]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 00 00 00 00 03 9f a5 a5
+<6>[ 1027.725454]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (02) 05 00 00 00 00 02 29 00
+<6>[ 1027.725530]  [2:crtc_commit:117:  443] dsi-ctrl:[print_cmd_desc] [SDE] print_cmd_desc : (03) 29 01 00 08 00 03 9f 5a 5a
+<6>[ 1027.725672]  [2:crtc_commit:117:  443] [SDE] ss_send_cmd : Send cmd(25): samsung,display_on_tx_cmds_revA --
+*/
 
 #define S6E3HA2_MIN_BRIGHTNESS		0
 #define S6E3HA2_MAX_BRIGHTNESS		100
