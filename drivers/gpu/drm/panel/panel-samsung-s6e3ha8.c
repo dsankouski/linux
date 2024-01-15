@@ -253,23 +253,6 @@ static int s6e3ha2_get_brightness(struct backlight_device *bl_dev)
 	return bl_dev->props.brightness;
 }
 
-static int s6e3ha2_set_vint(struct s6e3ha8 *ctx)
-{
-	struct backlight_device *bl_dev = ctx->panel.backlight;
-	unsigned int brightness = bl_dev->props.brightness;
-	unsigned char data[] = { 0xf4, 0x8b,
-			vint_table_ha2[brightness * (S6E3HA2_VINT_STATUS_MAX - 1) /
-			S6E3HA2_MAX_BRIGHTNESS] };
-
-	return s6e3ha2_dcs_write(ctx, data, ARRAY_SIZE(data));
-}
-
-static unsigned int s6e3ha2_get_brightness_index_ha2(unsigned int brightness)
-{
-	return (brightness * (S6E3HA2_NUM_GAMMA_STEPS - 1)) /
-		S6E3HA2_MAX_BRIGHTNESS;
-}
-
 static int s6e3ha8_test_key_on_f0(struct mipi_dsi_device *dsi)
 {
 	static const u8 d[] = { 0xf0, 0x5a, 0x5a };
