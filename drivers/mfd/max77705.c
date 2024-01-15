@@ -219,6 +219,7 @@ static int max77705_i2c_probe(struct i2c_client *i2c)
 	if (pdata) {
 		max77705->pdata = pdata;
 
+		pr_info("%s:%s setting up irqs\n", MFD_DEV_NAME, __func__)
 		pdata->irq_base = irq_alloc_descs(-1, 0, MAX77705_IRQ_NR, -1);
 		if (pdata->irq_base < 0) {
 			pr_err("%s:%s irq_alloc_descs Fail! ret(%d)\n",
@@ -325,12 +326,12 @@ static int max77705_suspend(struct device *dev)
 
 	if (device_may_wakeup(dev))
 		enable_irq_wake(max77705->irq);
-	
+
 	wait_event_interruptible_timeout(max77705->queue_empty_wait_q,
 					(!max77705->doing_irq) && (!max77705->is_usbc_queue), 1*HZ);
 
 	pr_info("%s:%s -\n", MFD_DEV_NAME, __func__);
-	
+
 	disable_irq(max77705->irq);
 
 	return 0;
