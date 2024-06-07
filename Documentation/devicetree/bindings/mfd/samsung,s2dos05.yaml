@@ -10,7 +10,7 @@ maintainers:
   - Dzmitry Sankouski <dsankouski@gmail.com>
 
 description:
-  This is a part of device tree bindings for S2M and S5M family of Power
+  This is a part of device tree bindings for S2DOS and S5DOS family of Power
   Management IC (PMIC).
 
   The S2DOS05 is a companion power management IC for the panel and touchscreen
@@ -22,7 +22,7 @@ description:
 
 properties:
   compatible:
-    const: samsung,s2dos05-pmic
+    const: samsung,s2dos05
 
   reg:
     maxItems: 1
@@ -49,26 +49,26 @@ additionalProperties: false
 examples:
   - |
     i2c {
-      #address-cells = <1>;
-      #size-cells = <0>;
-
-      pmic@60 {
-      	compatible = "samsung,s2dos05-pmic";
-      	reg = <0x60>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+    
+        pmic@60 {
+            compatible = "samsung,s2dos05";
+            reg = <0x60>;
 
             regulators {
                 s2dos05_ldo1: ldo1 {
                     regulator-name = "s2dos05-ldo1";
                     regulator-min-microvolt = <1500000>;
                     regulator-max-microvolt = <2000000>;
-                    regulator-active-discharge = <0x1>;
+                    regulator-active-discharge = <1>;
                 };
 
                 s2dos05_ldo2: ldo2 {
                     regulator-name = "s2dos05-ldo2";
                     regulator-min-microvolt = <1800000>;
                     regulator-max-microvolt = <1800000>;
-                    regulator-active-discharge = <0x1>;
+                    regulator-active-discharge = <1>;
                     regulator-boot-on;
                 };
 
@@ -76,7 +76,7 @@ examples:
                     regulator-name = "s2dos05-ldo3";
                     regulator-min-microvolt = <3000000>;
                     regulator-max-microvolt = <3000000>;
-                    regulator-active-discharge = <0x1>;
+                    regulator-active-discharge = <1>;
                     regulator-boot-on;
                 };
  
@@ -84,14 +84,14 @@ examples:
                     regulator-name = "s2dos05-ldo4";
                     regulator-min-microvolt = <2700000>;
                     regulator-max-microvolt = <3775000>;
-                    regulator-active-discharge = <0x1>;
+                    regulator-active-discharge = <1>;
                 };
  
                 s2dos05_buck1: buck1 {
                     regulator-name = "s2dos05-buck1";
                     regulator-min-microvolt = <850000>;
                     regulator-max-microvolt = <2100000>;
-                    regulator-active-discharge = <0x1>;
+                    regulator-active-discharge = <1>;
                 };
             };
         };
